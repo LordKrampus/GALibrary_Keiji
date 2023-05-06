@@ -1,8 +1,6 @@
-﻿using GA.Structures.BasicInterfaces;
-using GA.Structures.Generics;
-using GA.Structures.Individuals;
+﻿using GA.Structures.Individuals;
 using GA.Structures.Interfaces;
-using System;
+using GA.Structures.BasicInterfaces;
 
 namespace GA.Factories
 {

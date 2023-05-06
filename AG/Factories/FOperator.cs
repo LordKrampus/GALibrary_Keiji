@@ -1,14 +1,8 @@
-﻿using System;
-
-
+﻿using GA.Operators.Interfaces;
 using GA.Structures.Interfaces;
-using GA.Operators.Interfaces;
-using GA.Operators;
+
 using GA.Operators;
 using GA.Structures.Binaries;
-using GA.Structures.Integer;
-using GA.Operators.Interfaces;
-using System.Reflection;
 
 namespace GA.Factories
 {

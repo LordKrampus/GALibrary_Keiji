@@ -6,8 +6,8 @@ using System;
 
 namespace GA.Structures.Capsules
 {
-    public class ContainerChromosome<T, E, F, G, H> : 
-        Chromosome<T, E> where T : GeneChromosome<E> where E : DynamicChromosome<F, G, H> where F : PersistentGene<G>
+    public class ContainerChromosome<T, E, F, G, H> : Chromosome<T, E> 
+        where T : GeneChromosome<E> where E : DynamicChromosome<F, G, H> where F : PersistentGene<G>
         where G : GeneChromosome<H> where H : BIChromosome
     {
         public override T[] Genes

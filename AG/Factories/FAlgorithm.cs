@@ -1,10 +1,9 @@
-﻿using System;
-
-using GA.Algoritmos;
-using GA.Structures.Interfaces;
+﻿using GA.Structures.Interfaces;
 using GA.Functions.Interfaces;
 using GA.Methods.Interfaces;
 using GA.Operators.Interfaces;
+
+using GA.Algoritmos;
 
 namespace GA.Factories
 {
@@ -17,11 +16,9 @@ namespace GA.Factories
         public static FAlgorithm Instance = _instance ??= new FAlgorithm();
 
         public static IGeneticAlgorithm<T, E, F> Reflection_CreateAlgorithm<T, E, F>(IPopulation<T, E, F> population,
-            IFunction function, ISelectionMethod<T, E, F> method, IOperator<T, E, F>[] ops, object[] arguments)
+            IFunction function, ISelectionMethod<T, E, F> method, IOperator<T, E, F>[] operadores, object[] arguments)
             where T : IChromosome<E, F> where E: IGene<F>
         {
-            IOperator<T, E, F>[] operadores = ops as IOperator<T, E, F>[];
-
             return new GeneticAlgorithm<T, E, F>(population,  limitGenerations: (int)arguments[0], 
                 crossoverRate: (double)arguments[1], mutationRate: (double)arguments[2], function,
                 method, operadores, hasElitismo: (bool)arguments[3]);

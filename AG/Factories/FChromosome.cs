@@ -1,14 +1,7 @@
-﻿using GA.Factories;
-using GA.Structures.Capsules;
-using GA.Structures.Generics;
+﻿using GA.Structures.Interfaces;
+
 using GA.Structures.Integer;
-using GA.Structures;
 using GA.Structures.Binaries;
-using GA.Structures.Capsules;
-using GA.Structures.Interfaces;
-using GA.Utilities;
-using System;
-using System.Drawing;
 
 namespace GA.Factories
 {
@@ -19,18 +12,6 @@ namespace GA.Factories
         public static FChromosome Instance => _instance ??= new FChromosome();
 
         private FChromosome() { }
-
-        public static ContainerChromosome<T, E> Reflection_CreateContainerChromosome<T, E>(T[] genes)
-            where T : GeneChromosome<E> where E : BIChromosome
-        {
-            return new ContainerChromosome<T, E>(genes);
-        }
-
-        public BIChromosome? CreateContainerChromosome(Type tGenes, Type tGenesValue, BIGene[] genes)
-        {
-            return (BIChromosome?)typeof(FChromosome).GetMethod("Reflection_CreateContainerChromosome")?.
-                MakeGenericMethod(new Type[] { tGenes, tGenesValue }).Invoke(null, new object[] { genes });
-        }
 
         public object? GenerateChromosome(Type tChromosome, BIGene[] genes, object[] arguments)
         {

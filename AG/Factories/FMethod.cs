@@ -1,8 +1,7 @@
-﻿using System;
-
-using GA.Methods.Interfaces;
-using GA.Methods;
+﻿using GA.Methods.Interfaces;
 using GA.Structures.Interfaces;
+
+using GA.Methods;
 
 namespace GA.Factories
 {

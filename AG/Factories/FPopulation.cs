@@ -1,11 +1,9 @@
-﻿using System;
-using GA.Structures.Binaries;
+﻿using GA.Utilities;
+
 using GA.Structures.Interfaces;
-using GA.Structures.Populations;
-using GA.Factories;
-using GA.Utilities;
-using GA.Structures.Individuals;
 using GA.Structures.BasicInterfaces;
+
+using GA.Structures.Populations;
 
 namespace GA.Algoritmos.Factories
 {
