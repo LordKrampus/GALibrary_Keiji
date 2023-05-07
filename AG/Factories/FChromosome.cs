@@ -35,10 +35,10 @@ namespace GA.Factories
             return new IChromosome<T, E>[size];
         }
 
-        public BIChromosome[]? CreateEmptyArray(Type tGene, Type tGeneValue, int size)
+        public BIChromosome[]? CreateEmptyArray(Type[] tGenerics, int size)
         {
             return (BIChromosome[]?)typeof(FChromosome).GetMethod("Reflection_CreateEmptyArray")?.
-                MakeGenericMethod(new Type[] { tGene, tGeneValue }).Invoke(null, new object[] { size });
+                MakeGenericMethod(tGenerics).Invoke(null, new object[] { size });
         }
 
     }

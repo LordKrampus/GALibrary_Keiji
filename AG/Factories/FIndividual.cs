@@ -25,32 +25,25 @@ namespace GA.Factories
             }
         }
 
-        public static IIndividual<T, E, F>[] Reflection_CreateEmptyArray<T, E, F>(Type type, int size)
-            where T : IChromosome<E, F> where E : IGene<F>
-        {
-            switch (type)
-            {
-                case Type t when t.Equals(typeof(Individual<,,>)):
-                    return new Individual<T, E, F>[size];
-
-                default:
-                    throw new NotImplementedException();
-            }
-        }
-
-        public object? CreateIndividual(Type tChromosome, Type tGene, Type tGeneValue, Type tIndividual,
+        public object? CreateIndividual(Type tIndividual, Type[] tGenerics,
             object chromosome)
         {
             return typeof(FIndividual).GetMethod("Reflection_CreateIndividual")?.
-                MakeGenericMethod(new Type[] { tChromosome, tGene, tGeneValue})
+                MakeGenericMethod(tGenerics)
                 .Invoke(null, new object[] { tIndividual, chromosome });
         }
 
-        public BIIndividual[]? CreateEmptyArray(Type tChromosome, Type tGene, Type tGeneValue, Type tIndividual, int size)
+        public static IIndividual<T, E, F>[] Reflection_CreateEmptyArray<T, E, F>(int size)
+            where T : IChromosome<E, F> where E : IGene<F>
+        {
+            return new IIndividual<T, E, F>[size];
+        }
+
+        public BIIndividual[]? CreateEmptyArray(Type[] tGenerics, int size)
         {
             return (BIIndividual[]?)typeof(FIndividual).GetMethod("Reflection_CreateEmptyArray")?.
-               MakeGenericMethod(new Type[] { tChromosome, tGene, tGeneValue })
-               .Invoke(null, new object[] { tIndividual, size });
+               MakeGenericMethod(tGenerics)
+               .Invoke(null, new object[] { size });
         }
     }
 }

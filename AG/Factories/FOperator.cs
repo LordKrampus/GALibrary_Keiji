@@ -36,11 +36,11 @@ namespace GA.Factories
 
             switch (type)
             {
-                case Type t when t.Equals(typeof(TargetCrossover<,,>)):
+                case Type t when t.Equals(typeof(Crossover<,,>)):
                     return new TargetCrossover<T, E, F>(
                         (Crossover<T, E, F>)FOperator.Reflection_CreateSimpleOperator<T, E, F>(typeof(Crossover<,,>), arguments), factor: (double)arguments[0]);
 
-                case Type t when t.Equals(typeof(TargetMutation<,,>)):
+                case Type t when t.Equals(typeof(Mutation<,,>)):
                     return new TargetMutation<T, E, F>(
                         (Mutation<T, E, F>)FOperator.Reflection_CreateSimpleOperator<T, E, F>(typeof(Mutation<,,>), arguments), factor: (double)arguments[0]);
 
@@ -94,7 +94,7 @@ namespace GA.Factories
             return (IOperator<T, E, F>)new BinaryMutation<G>((double)arguments[0]);
         }
 
-        public object? GenerateOperator(Type tChromosomeInterface, Type tChromosome, Type tGene, Type tGeneValue, Type tOperator, object[] arguments)
+        public object? GenerateOperator(Type tChromosomeInterface, Type tOperator, Type[] tGenerics, object[] arguments)
         {
             string reflectionMethod;
             switch (tChromosomeInterface)
@@ -112,7 +112,7 @@ namespace GA.Factories
             }
 
             return typeof(FOperator).GetMethod(reflectionMethod)?.
-                        MakeGenericMethod(new Type[] { tChromosome, tGene, tGeneValue}).
+                        MakeGenericMethod(tGenerics).
                         Invoke(null, new object[] { tOperator, arguments });
         }
 
@@ -122,10 +122,10 @@ namespace GA.Factories
             return new IOperator<T, E, F>[size];
         }
 
-        public object[]? CreateEmptyArray(Type tChromosome, Type tGene, Type tGeneValue, int size)
+        public object[]? CreateEmptyArray(Type[] TGenerics, int size)
         {
             return (object[]?)typeof(FOperator).GetMethod("Reflection_CreateEmptyList")?.
-                         MakeGenericMethod(new Type[] { tChromosome, tGene, tGeneValue }).
+                         MakeGenericMethod(TGenerics).
                          Invoke(null, new object[] { size });
         }
     }

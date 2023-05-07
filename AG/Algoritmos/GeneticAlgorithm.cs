@@ -1,19 +1,16 @@
 ﻿using System;
+using System.Text;
+
+using GA.Structures.BasicInterfaces;
 
 using GA.Functions.Interfaces;
 using GA.Structures.Interfaces;
-using GA.Algoritmos.Factories;
-using GA.Structures.Binaries;
-using GA.Methods;
-using GA.Operators;
 using GA.Methods.Interfaces;
 using GA.Operators.Interfaces;
-using System.Text;
-using GA.Algoritmos.Factories;
+
 using GA.Procedures;
 using GA.Structures.Individuals;
-using GA.Structures.Populations;
-using GA.Structures.BasicInterfaces;
+
 
 namespace GA.Algoritmos
 {

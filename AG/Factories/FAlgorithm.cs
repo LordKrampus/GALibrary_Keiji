@@ -24,11 +24,11 @@ namespace GA.Factories
                 method, operadores, hasElitismo: (bool)arguments[3]);
         }
 
-        public object? GenerateAlgorithm(Type tChromosome, Type tGene, Type tGeneValue, 
-            object population, object function, object method, object[] ops, object[] arguments)
+        public object? GenerateAlgorithm(Type[] tGenerics, object population, object function,
+            object method, object[] ops, object[] arguments)
         {
             return typeof(FAlgorithm).GetMethod("Reflection_CreateAlgorithm")?.
-                 MakeGenericMethod(new Type[] { tChromosome, tGene, tGeneValue}).
+                 MakeGenericMethod(tGenerics).
                  Invoke(null, new object[] { population, function, method, ops, arguments });
         }
 

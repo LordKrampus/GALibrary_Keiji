@@ -6,7 +6,7 @@ namespace GA.Functions.Interfaces
 {
     public interface IFunction
     {
-        public double[] Factor { get; set;  }
+        public double[] Factors { get; set;  }
 
         public void ApplyFactor(double[] a, out double[] b);
 

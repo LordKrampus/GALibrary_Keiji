@@ -1,0 +1,12 @@
+C:\Users\angel\Documents\Trabalhos\MESTRADO\DISCIPLINAS\AG_Keiji\GALibrary_Keiji\AG\bin\Debug\net6.0\GALibrary.deps.json
+C:\Users\angel\Documents\Trabalhos\MESTRADO\DISCIPLINAS\AG_Keiji\GALibrary_Keiji\AG\bin\Debug\net6.0\GALibrary.dll
+C:\Users\angel\Documents\Trabalhos\MESTRADO\DISCIPLINAS\AG_Keiji\GALibrary_Keiji\AG\bin\Debug\net6.0\GALibrary.pdb
+C:\Users\angel\Documents\Trabalhos\MESTRADO\DISCIPLINAS\AG_Keiji\GALibrary_Keiji\AG\obj\Debug\net6.0\GALibrary.csproj.AssemblyReference.cache
+C:\Users\angel\Documents\Trabalhos\MESTRADO\DISCIPLINAS\AG_Keiji\GALibrary_Keiji\AG\obj\Debug\net6.0\GALibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\angel\Documents\Trabalhos\MESTRADO\DISCIPLINAS\AG_Keiji\GALibrary_Keiji\AG\obj\Debug\net6.0\GALibrary.AssemblyInfoInputs.cache
+C:\Users\angel\Documents\Trabalhos\MESTRADO\DISCIPLINAS\AG_Keiji\GALibrary_Keiji\AG\obj\Debug\net6.0\GALibrary.AssemblyInfo.cs
+C:\Users\angel\Documents\Trabalhos\MESTRADO\DISCIPLINAS\AG_Keiji\GALibrary_Keiji\AG\obj\Debug\net6.0\GALibrary.csproj.CoreCompileInputs.cache
+C:\Users\angel\Documents\Trabalhos\MESTRADO\DISCIPLINAS\AG_Keiji\GALibrary_Keiji\AG\obj\Debug\net6.0\GALibrary.dll
+C:\Users\angel\Documents\Trabalhos\MESTRADO\DISCIPLINAS\AG_Keiji\GALibrary_Keiji\AG\obj\Debug\net6.0\refint\GALibrary.dll
+C:\Users\angel\Documents\Trabalhos\MESTRADO\DISCIPLINAS\AG_Keiji\GALibrary_Keiji\AG\obj\Debug\net6.0\GALibrary.pdb
+C:\Users\angel\Documents\Trabalhos\MESTRADO\DISCIPLINAS\AG_Keiji\GALibrary_Keiji\AG\obj\Debug\net6.0\ref\GALibrary.dll

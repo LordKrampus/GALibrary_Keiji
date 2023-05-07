@@ -5,8 +5,8 @@ using System;
 
 namespace GA.Structures.Capsules
 {
-    public class DynamicChromosome<T, E, F> : 
-        Chromosome<T, E> where T : PersistentGene<E> where E : GeneChromosome<F> where F : BIChromosome
+    public class DynamicChromosome<T, E, F> : Chromosome<T, E>
+        where T : PersistentGene<E> where E : GeneChromosome<F> where F : BIChromosome
     {
         private int _limit;
 

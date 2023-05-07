@@ -5,7 +5,7 @@ using GA.Structures.BasicInterfaces;
 
 using GA.Structures.Populations;
 
-namespace GA.Algoritmos.Factories
+namespace GA.Factories
 {
     public class FPopulation
     {
@@ -25,10 +25,10 @@ namespace GA.Algoritmos.Factories
             return new Population<T, E, F>((IIndividual<T, E, F>[])individuals, populationSize, biggerIsBetter);
         }
 
-        public BIPopulation? GeneratePopulation(Type tChromosome, Type tGene, Type tGeneValue, Type tPopulation, BIIndividual[] individuals, int populationSize, bool biggerIsBetter)
+        public BIPopulation? GeneratePopulation(Type tPopulation, Type[] tGenerics, BIIndividual[] individuals, int populationSize, bool biggerIsBetter)
         {
             return (BIPopulation?)typeof(FPopulation).GetMethod("Reflection_CreatePopulation")?.
-                MakeGenericMethod(new Type[] { tChromosome, tGene, tGeneValue }).
+                MakeGenericMethod(tGenerics).
                 Invoke(null, new object[] { tPopulation, individuals, populationSize, biggerIsBetter });
         }
     }

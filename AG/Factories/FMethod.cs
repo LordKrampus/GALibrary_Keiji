@@ -30,10 +30,10 @@ namespace GA.Factories
             }
         }
 
-        public object? GenerateMethod(Type tChromosome, Type tGene, Type tGeneValue, Type tMethod, object[] parameters)
+        public object? GenerateMethod(Type tMethod, Type[] tGenerics, object[] parameters)
         {
             return typeof(FMethod).GetMethod("ReflectionGenerateMethod")?.
-                        MakeGenericMethod(new Type[] { tChromosome, tGene, tGeneValue}).
+                        MakeGenericMethod(tGenerics).
                         Invoke(null, new object[] { tMethod, parameters });
         }
     }
