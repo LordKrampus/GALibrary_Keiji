@@ -1,6 +1,7 @@
 ﻿using GA.Structures.Interfaces;
 
 using GA.Structures.Capsules;
+using GA.Structures.Generics;
 
 namespace GA.Factories
 {
@@ -20,22 +21,22 @@ namespace GA.Factories
             return new ContainerChromosome<T, E, F, G, H>(genes);
         }
 
-        public static DynamicChromosome<T, E, F, G> Reflection_CreateDynamicChromosome<T, E, F, G>(int limit)
+        public static DynamicChromosome<T, E, F, G> Reflection_CreateDynamicChromosome<T, E, F, G>(string name, int limit)
            where T : PersistentGene<GeneChromosome<E, F, G>, G> where E : IChromosome<F, G> where F : IGene<G>
         {
-            return new DynamicChromosome<T, E, F, G>(limit);
+            return new DynamicChromosome<T, E, F, G>(name, limit);
         }
 
         public BIChromosome? CreateContainerChromosome(Type[] tGenerics, BIGene[] genes)
         {
-            return (BIChromosome?)typeof(FChromosome).GetMethod("Reflection_CreateContainerChromosome")?.
+            return (BIChromosome?)typeof(FGeneCapsule).GetMethod("Reflection_CreateContainerChromosome")?.
                 MakeGenericMethod(tGenerics).Invoke(null, new object[] { genes });
         }
 
-        public BIChromosome? CreateDynamicChromosome(Type[] tGenerics, int limit)
+        public BIChromosome? CreateDynamicChromosome(Type[] tGenerics, string name, int limit)
         {
-            return (BIChromosome?)typeof(FChromosome).GetMethod("Reflection_CreateDynamicChromosome")?.
-                MakeGenericMethod(tGenerics).Invoke(null, new object[] { limit });
+            return (BIChromosome?)typeof(FGeneCapsule).GetMethod("Reflection_CreateDynamicChromosome")?.
+                MakeGenericMethod(tGenerics).Invoke(null, new object[] { name, limit });
         }
 
         public BIChromosome? CreateChromosomeCapsule(Type tChromosome, Type[] tGenerics, object[] arguments)
@@ -71,16 +72,16 @@ namespace GA.Factories
             return new GeneChromosome<T, E, F>(chromosome);
         }
 
-        public BIGene? CreatePersistentGene(Type tValue, object gene, string name, int persistence)
+        public BIGene? CreatePersistentGene(Type[] tGenerics, object gene, string name, int persistence)
         {
-            return (BIGene?)typeof(FGene).GetMethod("Reflection_CreatePersistentGene")?.
-               MakeGenericMethod(tValue).Invoke(null, new object[] { gene, name, persistence });
+            return (BIGene?)typeof(FGeneCapsule).GetMethod("Reflection_CreatePersistentGene")?.
+               MakeGenericMethod(tGenerics).Invoke(null, new object[] { gene, name, persistence });
         }
 
-        public BIGene? CreateGeneChromosome(Type tValue, object chromosome)
+        public BIGene? CreateGeneChromosome(Type[] tGenerics, object chromosome)
         {
-            return (BIGene?)typeof(FGene).GetMethod("Reflection_CreateGeneChromosome")?.
-                MakeGenericMethod(tValue).Invoke(null, new object[] { chromosome });
+            return (BIGene?)typeof(FGeneCapsule).GetMethod("Reflection_CreateGeneChromosome")?.
+                MakeGenericMethod(tGenerics).Invoke(null, new object[] { chromosome });
         }
 
         public BIChromosome? CreateGeneCapsule(Type tGene, Type tGenerics, object[] arguments)
@@ -100,7 +101,7 @@ namespace GA.Factories
                     throw new Exception();
             }
 
-            return (BIChromosome?)typeof(FChromosome).GetMethod(methodStr)?.
+            return (BIChromosome?)typeof(FGeneCapsule).GetMethod(methodStr)?.
                MakeGenericMethod(tGenerics).Invoke(null, arguments);
         }
 
@@ -115,6 +116,30 @@ namespace GA.Factories
             return (BIGene[]?)typeof(FGeneCapsule).GetMethod("Reflection_CreateEmptyArray")?.
                MakeGenericMethod(new Type[] { tGene }).
                Invoke(null, new object[] { size});
+        }
+
+        public static GeneChromosome<T, E, F>[]? Reflection_CreateEmptyArrayGeneChromosome<T, E, F>(GeneChromosome<T, E, F> gene, int size)
+            where T : IChromosome<E, F> where E : IGene<F>
+        {
+            return new GeneChromosome<T, E, F>[size];
+        }
+
+        public BIGene[]? CreateEmptyArrayGeneChromosome(Type[] tGenerics, object gene, int size)
+        {
+            return (BIGene[]?)typeof(FGeneCapsule).GetMethod("Reflection_CreateEmptyArrayGeneChromosome")?.
+               MakeGenericMethod(tGenerics).Invoke(null, new object[] { gene, size });
+        }
+
+        public static PersistentGene<T, E>[]? Reflection_CreateEmptyArrayPersistentGene<T, E>(PersistentGene<T, E> gene, int size)
+            where T : IGene<E>
+        {
+            return gene.GenerateArray(size);
+        }
+
+        public BIGene[]? CreateEmptyArrayPersistentGene(Type[] tGenerics, object gene, int size)
+        {
+            return (BIGene[]?)typeof(FGeneCapsule).GetMethod("Reflection_CreateEmptyArrayPersistentGene")?.
+               MakeGenericMethod(tGenerics).Invoke(null, new object[] { gene, size });
         }
     }
 }

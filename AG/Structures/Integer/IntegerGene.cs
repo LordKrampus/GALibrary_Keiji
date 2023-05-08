@@ -12,5 +12,10 @@ namespace GA.Structures.Integer
         {
             return new IntegerGene(base._value);
         }
+
+        public override string ToString()
+        {
+            return this.Value.ToString();
+        }
     }
 }

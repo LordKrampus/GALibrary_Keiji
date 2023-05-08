@@ -205,15 +205,14 @@ namespace GA.Structures.Utilities
                 sections[i][e] = chromosome.Genes[e + lastSlicePoint];
         }
 
-        public static void SortSequence<T, E>(T[] sequence, out T[] sortSeq)
-            where T : IGene<E>
+        public static void SortSequence(BIGene[] sequence, out BIGene[] sortSeq)
         {
             Sorter sorter = new Sorter();
             int sort;
 
             int size = sequence.Length;
-            List<T> list = new List<T>(sequence);
-            sortSeq = new T[size];
+            List<BIGene> list = new List<BIGene>(sequence);
+            sortSeq = new BIGene[size];
 
             for (int i = 0; i < size; i++)
             {

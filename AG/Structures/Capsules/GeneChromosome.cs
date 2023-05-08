@@ -29,6 +29,11 @@ namespace GA.Structures.Capsules
             return new GeneChromosome<T, E, F>((T)this._chromosome.Generate(0));
         }
 
+        public GeneChromosome<T, E, F>[] GenerateArray(int size)
+        {
+            return new GeneChromosome<T, E, F>[size];
+        }
+
         public override string ToString()
         {
             return $"{this._chromosome.ToString()} ({base._value.ToString()})" ;

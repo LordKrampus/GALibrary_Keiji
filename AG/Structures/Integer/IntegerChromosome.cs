@@ -1,6 +1,7 @@
 ﻿using GA.Structures.Generics;
 using GA.Structures.Interfaces;
 using System;
+using System.Text;
 
 namespace GA.Structures.Integer
 {
@@ -32,6 +33,16 @@ namespace GA.Structures.Integer
             for (int i = 0; i < size; i++)
                 newGenes[i] = new IntegerGene(0);
             return new IntegerChromosome(newGenes, this._maxValue);
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            foreach(IntegerGene gene in base._genes)
+                sb.Append(gene.ToString() + " ");
+
+            return sb.ToString();
         }
     }
 }

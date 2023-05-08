@@ -70,7 +70,19 @@ namespace GA.Structures.Binaries
 
         public override string ToString()
         {
-            return base.ToString();
+            StringBuilder sb = new StringBuilder();
+
+            int i = this.Target;
+            foreach(BinaryGene gene in base.Genes)
+            {
+                sb.Append(gene);
+                i--;
+
+                if (i == 0)
+                    sb.Append("|");
+            }
+
+            return $"{sb.ToString()} .value: {this.Value} .maxValue {this.MaxValue}";
         }
     } // end : struct
 } // end : namespace

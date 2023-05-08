@@ -27,6 +27,11 @@ namespace GA.Structures.Capsules
             return new PersistentGene<T, E>(this._gene, this._name, this._persistence);
         }
 
+        public PersistentGene<T, E>[] GenerateArray(int size)
+        {
+            return new PersistentGene<T, E>[size];
+        }
+
         public override string ToString()
         {
             return base.ToString() + $" ({Persistence})";
