@@ -49,6 +49,7 @@ namespace GA.Structures.Utilities
             }
         }
 
+        /*
         public static void DistributeSequenceContainers<T, E, F, G>(T[] containers, out E[][] sequence) 
             where T : GeneChromosome<DynamicChromosome<E, F, G>> where E : PersistentGene<F>
             where F : GeneChromosome<G> where G : BIChromosome 
@@ -79,6 +80,7 @@ namespace GA.Structures.Utilities
                 containers[i].Value.AddGenes(sequence[i]);
             }
         }
+        */
 
         /*
         public static void SwapSectionInSequence<T>(T[] sequence, int slicePoint, T[] chromosomes,

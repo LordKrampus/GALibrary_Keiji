@@ -5,20 +5,26 @@ using System;
 
 namespace GA.Structures.Capsules
 {
-    public class PersistentGene<T> : Gene<T> 
+    public class PersistentGene<T, E> : Gene<E> where T :  IGene<E>  
     {
+        private T _gene;
+        private string _name;
         private int _persistence;
 
+        public T Gene => this._gene;
+        private string Name => this._name;
         public int Persistence => this._persistence;
 
-        public PersistentGene(T value, int persistence) : base (value)
+        public PersistentGene(T gene, string name, int persistence) : base (gene.Value)
         {
+            this._gene = gene;
+            this._name = name;
             this._persistence = persistence;
         }
 
-        public override PersistentGene<T> Generate()
+        public override PersistentGene<T, E> Generate()
         {
-            return new PersistentGene<T>(base._value, this._persistence);
+            return new PersistentGene<T, E>(this._gene, this._name, this._persistence);
         }
 
         public override string ToString()

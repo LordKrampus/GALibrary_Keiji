@@ -5,18 +5,33 @@ using GA.Structures.Interfaces;
 
 namespace GA.Structures.Capsules
 {
-    public class GeneChromosome<T> : Gene<T>
+    public class GeneChromosome<T, E, F> : Gene<F> where T : IChromosome<E, F> where E : IGene<F>
     {
-        public GeneChromosome(T value) : base(value) { }
+        private T _chromosome;
 
-        public override GeneChromosome<T> Generate()
+        public T Chromosome => this._chromosome;
+
+        public override F Value
         {
-            return new GeneChromosome<T>(this._value);
+            get
+            {
+                return this._chromosome.Genes[0].Value; // !!!
+            }
+        }
+
+        public GeneChromosome(T chromosome) : base(default) 
+        {
+            this._chromosome = chromosome;
+        }
+
+        public override GeneChromosome<T, E, F> Generate()
+        {
+            return new GeneChromosome<T, E, F>((T)this._chromosome.Generate(0));
         }
 
         public override string ToString()
         {
-            return base._value.ToString() ;
+            return $"{this._chromosome.ToString()} ({base._value.ToString()})" ;
         }
     }
 }

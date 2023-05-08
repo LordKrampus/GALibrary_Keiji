@@ -7,7 +7,7 @@ namespace GA.Structures.Generics
     {
         protected T _value;
 
-        public T Value { get => this._value; set => this._value = value; }
+        public virtual T Value { get => this._value; set => this._value = value; }
 
         public Gene(T value)
         {

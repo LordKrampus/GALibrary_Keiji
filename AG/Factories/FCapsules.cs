@@ -14,16 +14,16 @@ namespace GA.Factories
 
 
         public static ContainerChromosome<T, E, F, G, H> Reflection_CreateContainerChromosome<T, E, F, G, H>(T[] genes)
-            where T : GeneChromosome<E> where E : DynamicChromosome<F, G, H> where F : PersistentGene<G>
-            where G : GeneChromosome<H> where H : BIChromosome
+            where T : GeneChromosome<DynamicChromosome<E, F, G, H>, E, H> where E : PersistentGene<GeneChromosome<F, G, H>, H>
+            where F : IChromosome<G, H> where G : IGene<H>
         {
             return new ContainerChromosome<T, E, F, G, H>(genes);
         }
 
-        public static DynamicChromosome<T, E, F> Reflection_CreateDynamicChromosome<T, E, F>(int limit)
-            where T : PersistentGene<E> where E : GeneChromosome<F> where F : BIChromosome
+        public static DynamicChromosome<T, E, F, G> Reflection_CreateDynamicChromosome<T, E, F, G>(int limit)
+           where T : PersistentGene<GeneChromosome<E, F, G>, G> where E : IChromosome<F, G> where F : IGene<G>
         {
-            return new DynamicChromosome<T, E, F>(limit);
+            return new DynamicChromosome<T, E, F, G>(limit);
         }
 
         public BIChromosome? CreateContainerChromosome(Type[] tGenerics, BIGene[] genes)
@@ -47,7 +47,7 @@ namespace GA.Factories
                     methodStr = "Reflection_CreateContainerChromosome";
                     break;
 
-                case Type t when t.Equals(typeof(DynamicChromosome<,,>)):
+                case Type t when t.Equals(typeof(DynamicChromosome<,,,>)):
                     methodStr = "Reflection_CreateDynamicChromosome";
                     break;
 
@@ -59,26 +59,28 @@ namespace GA.Factories
                MakeGenericMethod(tGenerics).Invoke(null, arguments);
         }
 
-        public static BIGene Reflection_CreatePersistentGene<T>(T value, int persistence)
+        public static BIGene Reflection_CreatePersistentGene<T, E>(T gene, string name, int persistence)
+            where T : IGene<E>
         {
-            return new PersistentGene<T>(value, persistence);
+            return new PersistentGene<T, E>(gene, name, persistence);
         }
 
-        public static BIGene Reflection_CreateGeneChromosome<T>(T value)
+        public static BIGene Reflection_CreateGeneChromosome<T, E, F>(T chromosome)
+            where T : IChromosome<E, F> where E : IGene<F>
         {
-            return new GeneChromosome<T>(value);
+            return new GeneChromosome<T, E, F>(chromosome);
         }
 
-        public BIGene? CreatePersistentGene(Type tValue, object value, int persistence)
+        public BIGene? CreatePersistentGene(Type tValue, object gene, string name, int persistence)
         {
             return (BIGene?)typeof(FGene).GetMethod("Reflection_CreatePersistentGene")?.
-               MakeGenericMethod(tValue).Invoke(null, new object[] { value, persistence });
+               MakeGenericMethod(tValue).Invoke(null, new object[] { gene, name, persistence });
         }
 
-        public BIGene? CreateGeneChromosome(Type tValue, object value)
+        public BIGene? CreateGeneChromosome(Type tValue, object chromosome)
         {
             return (BIGene?)typeof(FGene).GetMethod("Reflection_CreateGeneChromosome")?.
-                MakeGenericMethod(tValue).Invoke(null, new object[] { value });
+                MakeGenericMethod(tValue).Invoke(null, new object[] { chromosome });
         }
 
         public BIChromosome? CreateGeneCapsule(Type tGene, Type tGenerics, object[] arguments)
@@ -86,11 +88,11 @@ namespace GA.Factories
             string methodStr;
             switch (tGene)
             {
-                case Type t when t.Equals(typeof(GeneChromosome<>)):
+                case Type t when t.Equals(typeof(GeneChromosome<,,>)):
                     methodStr = "Reflection_CreateGeneChromosome";
                     break;
 
-                case Type t when t.Equals(typeof(PersistentGene<>)):
+                case Type t when t.Equals(typeof(PersistentGene<,>)):
                     methodStr = "Reflection_CreatePersistentGene";
                     break;
 
