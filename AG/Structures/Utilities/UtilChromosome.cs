@@ -31,6 +31,14 @@ namespace GA.Structures.Utilities
             sequence[pointA] = aux;
         }
 
+        public static void InvertGeneInSequence<E, F>(E[] sequence, int pointA, int pointB)
+            where E : IGene<F>
+        {
+            E aux = sequence[pointB];
+            sequence[pointB] = sequence[pointA];
+            sequence[pointA] = aux;
+        }
+
         public static void SwapSectionInChromosome<T, E, F>(T chromosome, int slicePoint, E[] genes, int genesCount)
             where T : IChromosome<E, F> where E : IGene<F>
         {

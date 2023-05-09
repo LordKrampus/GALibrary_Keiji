@@ -36,6 +36,8 @@ namespace GA.Structures.Capsules
             }
         }
 
+        public int Count => this.Genes.Length;
+
         public double Limit => this._limit;
         public string Name => this._name;
 

@@ -32,21 +32,21 @@ namespace GA.Operators
             return new T[] { a, b };
         }
 
-        public E[][] Apply(E[] a, E[] b)
+        public E[][] Apply(E[] aE, E[] bE)
         {
             E[][] aSections;
             E[][] bSections;
 
-            int individualSize = a.Length;
-            int slicePoint = base.GeneratePoint(a);
+            int individualSize = aE.Length;
+            int slicePoint = base.GeneratePoint(aE);
 
-            UtilChromosome.SplitSectionsInGenes<E, F>(a, individualSize, slicePoint, out aSections);
-            UtilChromosome.SplitSectionsInGenes<E, F>(b, individualSize, slicePoint, out bSections);
+            UtilChromosome.SplitSectionsInGenes<E, F>(aE, individualSize, slicePoint, out aSections);
+            UtilChromosome.SplitSectionsInGenes<E, F>(bE, individualSize, slicePoint, out bSections);
 
-            UtilChromosome.SwapSectionInChromosome<E, F>(a, slicePoint, bSections[1], individualSize - slicePoint);
-            UtilChromosome.SwapSectionInChromosome<E, F>(b, slicePoint, aSections[1], individualSize - slicePoint);
+            UtilChromosome.SwapSectionInChromosome<E, F>(aE, slicePoint, bSections[1], individualSize - slicePoint);
+            UtilChromosome.SwapSectionInChromosome<E, F>(bE, slicePoint, aSections[1], individualSize - slicePoint);
 
-            return new E[][] { a, b };
+            return new E[][] { aE, bE };
         }
 
     } // end : class (Crossover<>:IOperation<>)

@@ -3,6 +3,8 @@ using GA.Structures.Interfaces;
 
 using GA.Operators;
 using GA.Structures.Binaries;
+using GA.Structures.Capsules;
+using GALibrary.Operators;
 
 namespace GA.Factories
 {
@@ -114,6 +116,51 @@ namespace GA.Factories
             return typeof(FOperator).GetMethod(reflectionMethod)?.
                         MakeGenericMethod(tGenerics).
                         Invoke(null, new object[] { tOperator, arguments });
+        }
+
+        public static IOperator<T, G, H> Reflection_CreateContainerCrossover<T, E, F, G, H>(double factor)
+            where T : ContainerChromosome<GeneChromosome<DynamicChromosome<E, F, G, H>, E, H>, E, F, G, H> where E : PersistentGene<GeneChromosome<F, G, H>, H>
+            where F : IChromosome<G, H> where G : IGene<H>
+        {
+            return new ContainerCrossover<T, E, F, G, H>(factor);
+        }
+
+        public static IOperator<T, G, H> Reflection_CreateContainerMutation<T, E, F, G, H>(double factor)
+            where T : ContainerChromosome<GeneChromosome<DynamicChromosome<E, F, G, H>, E, H>, E, F, G, H> where E : PersistentGene<GeneChromosome<F, G, H>, H>
+            where F : IChromosome<G, H> where G : IGene<H>
+        {
+            return new ContainerMutation<T, E, F, G, H>(factor);
+        }
+
+        public BIOperator? CreateContainerCrossover(Type[] tGenerics, double factor)
+        {
+            return (BIOperator?)typeof(FOperator).GetMethod("Reflection_CreateContainerCrossover")?.
+                MakeGenericMethod(tGenerics).Invoke(null, new object[] { factor });
+        }
+
+        public BIOperator? CreateContainerMutation(Type[] tGenerics, double factor)
+        {
+            return (BIOperator?)typeof(FOperator).GetMethod("Reflection_CreateContainerMutation")?.
+                MakeGenericMethod(tGenerics).Invoke(null, new object[] { factor });
+        }
+
+        public BIOperator? CreateContainerOperator(Type tOperator, Type[] tGenerics, double factor)
+        {
+            string methodName;
+            switch (tOperator)
+            {
+                case Type t when t.Equals(typeof(Crossover<,,>)):
+                    methodName = "Reflection_CreateContainerCrossover";
+                    break;
+                case Type t when t.Equals(typeof(Mutation<,,>)):
+                    methodName = "Reflection_CreateContainerMutation";
+                    break;
+                default:
+                    throw new Exception();
+            }
+
+            return (BIOperator?)typeof(FOperator).GetMethod(methodName)?.
+                MakeGenericMethod(tGenerics).Invoke(null, new object[] { factor });
         }
 
         public static IOperator<T, E, F>[] Reflection_CreateEmptyList<T, E, F>(int size)

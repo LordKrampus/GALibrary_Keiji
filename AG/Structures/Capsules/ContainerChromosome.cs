@@ -39,6 +39,17 @@ namespace GA.Structures.Capsules
             }
         }
 
+        public int Count
+        {
+            get
+            {
+                int count = 0;
+                foreach (T container in this._containers)
+                    count += container.Chromosome.Count;
+                return count;
+            }
+        }
+
         public ContainerChromosome(T[] containers) : base (Array.Empty<G>()) 
         {
             this._containers = containers;
@@ -156,7 +167,13 @@ namespace GA.Structures.Capsules
             }
         }
 
-        public BIGene[] GetFlatSequence()
+        public BIGene[] ObjArrayGetFlatSequence()
+        {
+            return GetFlatSequence();
+        }
+
+
+        public E[] GetFlatSequence()
         {
             List<E> sequence = new List<E>();
             int containersCount = this._containers.Length, sequenceCount;
