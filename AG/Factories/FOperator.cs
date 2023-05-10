@@ -163,7 +163,7 @@ namespace GA.Factories
                 MakeGenericMethod(tGenerics).Invoke(null, new object[] { factor });
         }
 
-        public static IOperator<T, E, F>[] Reflection_CreateEmptyList<T, E, F>(int size)
+        public static IOperator<T, E, F>[] Reflection_CreateEmptyArray<T, E, F>(int size)
             where T : IChromosome<E, F> where E : IGene<F>
         {
             return new IOperator<T, E, F>[size];
@@ -171,7 +171,7 @@ namespace GA.Factories
 
         public object[]? CreateEmptyArray(Type[] TGenerics, int size)
         {
-            return (object[]?)typeof(FOperator).GetMethod("Reflection_CreateEmptyList")?.
+            return (object[]?)typeof(FOperator).GetMethod("Reflection_CreateEmptyArray")?.
                          MakeGenericMethod(TGenerics).
                          Invoke(null, new object[] { size });
         }

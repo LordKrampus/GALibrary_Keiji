@@ -14,6 +14,8 @@ namespace GA.Structures.Generics
         public abstract double Value { get; }
         public abstract double MaxValue { get; }
 
+        public virtual int Count => this.Genes.Length;
+
         public Chromosome(T[] gene)
         {
             this._genes = gene;

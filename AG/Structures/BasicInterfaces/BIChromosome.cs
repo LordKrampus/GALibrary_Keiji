@@ -9,6 +9,7 @@ namespace GA.Structures.Interfaces
 
         public double Value { get; }
         public double MaxValue { get; }
+        public int Count { get; }
 
         public BIChromosome Generate(int length);
     }

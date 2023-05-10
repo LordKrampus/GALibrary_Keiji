@@ -6,4 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Structures\_deprecated\**" />
+    <EmbeddedResource Remove="Structures\_deprecated\**" />
+    <None Remove="Structures\_deprecated\**" />
+  </ItemGroup>
+
 </Project>

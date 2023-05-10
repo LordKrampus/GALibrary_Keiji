@@ -48,6 +48,28 @@ namespace GA.Structures.Utilities
             }
         }
 
+        public static void SwapSectionInGenesCombine<E, F>(E[] genes, int slicePoint, E[] newGenes, int genesCount)
+             where E : IGene<F>
+        {
+            E oldGene, newGene, aux;
+            int sizeGenes = genes.Length;
+            for (int i = 0; i < genesCount; i++)
+            {
+                oldGene = genes[slicePoint + i];
+                newGene = newGenes[i];
+                //aux = new E[genesCount];
+                for (int e = 0; e < sizeGenes; e++)
+                {
+                    aux = genes[e];
+                    if (newGene.Equals(aux))
+                    {
+                        genes[e] = oldGene;
+                    }
+                }
+                genes[slicePoint + i] = newGene;
+            }
+        }
+
         public static void SwapSectionInChromosome<E, F>(E[] genes, int slicePoint, E[] section, int genesCount)
             where E : IGene<F>
         {

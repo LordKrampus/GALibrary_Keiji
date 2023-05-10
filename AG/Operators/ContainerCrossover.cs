@@ -31,8 +31,8 @@ namespace GALibrary.Operators
             UtilChromosome.SplitSectionsInGenes<E, H>(sections[0], individualSize, slicePoint, out aSections);
             UtilChromosome.SplitSectionsInGenes<E, H>(sections[1], individualSize, slicePoint, out bSections);
 
-            UtilChromosome.SwapSectionInChromosome<E, H>(sections[0], slicePoint, bSections[1], individualSize - slicePoint);
-            UtilChromosome.SwapSectionInChromosome<E, H>(sections[1], slicePoint, aSections[1], individualSize - slicePoint);
+            UtilChromosome.SwapSectionInGenesCombine<E, H>(sections[0], slicePoint, bSections[1], individualSize - slicePoint);
+            UtilChromosome.SwapSectionInGenesCombine<E, H>(sections[1], slicePoint, aSections[1], individualSize - slicePoint);
 
             a.AddSequence(sections[0]);
             b.AddSequence(sections[1]);

@@ -50,6 +50,9 @@ namespace GA.Structures.Capsules
         public override BIChromosome Generate(int length)
         {
             DynamicChromosome<T, E, F, G> newChromosome = new DynamicChromosome<T, E, F, G>(this._name, this._limit);
+            newChromosome.Genes = new T[this.Genes.Length];
+            for (int i = 0; i < this.Genes.Length; i++)
+                newChromosome.Genes[i] = this.Genes[i];
             return newChromosome;
         }
 

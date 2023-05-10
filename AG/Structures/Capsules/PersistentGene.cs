@@ -12,7 +12,7 @@ namespace GA.Structures.Capsules
         private int _persistence;
 
         public T Gene => this._gene;
-        private string Name => this._name;
+        public string Name => this._name;
         public int Persistence => this._persistence;
 
         public PersistentGene(T gene, string name, int persistence) : base (gene.Value)

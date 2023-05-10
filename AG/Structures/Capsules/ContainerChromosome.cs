@@ -39,7 +39,7 @@ namespace GA.Structures.Capsules
             }
         }
 
-        public int Count
+        public override int Count
         {
             get
             {
@@ -57,15 +57,17 @@ namespace GA.Structures.Capsules
 
         public override ContainerChromosome<T, E, F, G, H> Generate(int length)
         {
+            length = this.Containers.Length;
             T[] newGenes = new T[length];
             for (int i = 0; i < length; i++)
-                newGenes[i] = (T)base.Genes[0].Generate();
+                newGenes[i] = (T)this.Containers[i].Generate();
 
             return new ContainerChromosome<T, E, F, G, H>(newGenes);
         }
 
         public void AddSequence(E[] sequence)
         {
+            this.ClearSequence();
             int valuesCount = sequence.Length, containersCount = this._containers.Length;
 
             int controlCheck, firstMatch, e = 0;
@@ -177,12 +179,17 @@ namespace GA.Structures.Capsules
         {
             List<E> sequence = new List<E>();
             int containersCount = this._containers.Length, sequenceCount;
+            E gene;
             for (int i = 0; i < containersCount; i++)
             {
                 sequenceCount = this._containers[i].Chromosome.Genes.Length;
                 for (int e = 0; e < sequenceCount; e++)
                 {
-                    sequence.Add(this._containers[i].Chromosome.Genes[e]);
+                    gene = this._containers[i].Chromosome.Genes[e];
+                    if (gene.Persistence > 1 && sequence.Contains(gene))
+                        continue;
+
+                    sequence.Add(gene);
                 }
             }
             return sequence.ToArray();
