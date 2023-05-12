@@ -1,10 +1,9 @@
 ﻿using GA.Structures.Interfaces;
-using System;
-
+using GALibrary.Structures.BasicInterfaces;
 
 namespace GA.Structures.BasicInterfaces
 {
-    public interface BIIndividual
+    public interface BIIndividual : BIGeneric
     {
         public BIChromosome ObjChromosome { get; }
 

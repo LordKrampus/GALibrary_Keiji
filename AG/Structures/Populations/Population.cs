@@ -17,7 +17,7 @@ namespace GA.Structures.Populations
 
         public IIndividual<T, E, F>[] Individuals => _individuals;
         public BIIndividual[] ObjIndividuals => _individuals;
-        public int Size => _size;
+        public int Count => _size;
 
         public int Generation
         { get => _generation; set => _generation = value; }
@@ -30,7 +30,7 @@ namespace GA.Structures.Populations
                 double mean = 0;
                 foreach (IIndividual<T, E, F> individual in Individuals)
                     mean += individual.Fitness;
-                mean /= Size;
+                mean /= Count;
                 return mean;
             }
         }

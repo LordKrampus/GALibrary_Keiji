@@ -36,7 +36,7 @@ namespace GA.Algoritmos
         private List<double> _cacheMeans;
         private double _cacheMean;
 
-        public int PopulationSize { get => this._population.Size; set => new NotImplementedException(); }
+        public int PopulationSize { get => this._population.Count; set => new NotImplementedException(); }
         public int IndividualSize { get => this._population.Individuals [0].Size; set => throw new NotImplementedException(); }
         public int LimitGenerations { get => this._limitGenerations; set => this._limitGenerations = value; }
 

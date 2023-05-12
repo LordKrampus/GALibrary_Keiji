@@ -8,17 +8,26 @@ namespace GA.Structures.Generics
         protected T _value;
 
         public virtual T Value { get => this._value; set => this._value = value; }
+        public object ObjValue { get => this._value; set => this._value = (T)value; }
 
         public Gene(T value)
         {
             this._value = value;
         }
 
-        public abstract BIGene Generate();
+        public object[] GenerateArray(int length)
+        {
+            return new Gene<T>[length];
+        }
+
+        public object New(object[] arguments)
+        {
+            return this.New(arguments);
+        }
 
         public override string ToString()
         {
-            return this._value.ToString();
+            return this.Value.ToString();
         }
     }
 }

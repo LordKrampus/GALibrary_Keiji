@@ -4,10 +4,8 @@ using System;
 
 namespace GA.Structures.Interfaces
 {
-    public interface IIndividual<T, E, F> : BIIndividual, ICloneable where T : IChromosome<E, F> where E : IGene<F>
+    public interface IIndividual<T> : BIIndividual, ICloneable where T : BIChromosome
     {
         public T Chromosome { get; }
-
-        public object Clone();
     }
 }

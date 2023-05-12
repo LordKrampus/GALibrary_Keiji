@@ -1,9 +1,9 @@
-﻿using System;
+﻿using GALibrary.Structures.BasicInterfaces;
 
 namespace GA.Structures.Interfaces
 {
-    public interface BIGene
+    public interface BIGene : BIGeneric
     {
-        public BIGene Generate();
+        public object ObjValue { get; set; }
     }
 }

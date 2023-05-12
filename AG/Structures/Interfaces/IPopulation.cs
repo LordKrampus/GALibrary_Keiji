@@ -4,11 +4,11 @@ using GA.Structures.Individuals;
 
 namespace GA.Structures.Interfaces
 {
-    public interface IPopulation<T, E, F> : BIPopulation, ICloneable where T : IChromosome<E, F> where E : IGene<F>
+    public interface IPopulation<T> : BIPopulation, ICloneable where T : BIChromosome
     {
-        public IIndividual<T, E, F>[] Individuals { get; }
-        public IIndividual<T, E, F> BestIndividual { get; }
-        public IIndividual<T, E, F> CacheBestIndividual { get; }
+        public IIndividual<T>[] Individuals { get; }
+        public IIndividual<T> BestIndividual { get; }
+        public IIndividual<T> CacheBestIndividual { get; }
 
         public new object Clone();
     }
