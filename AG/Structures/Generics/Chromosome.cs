@@ -21,7 +21,7 @@ namespace GA.Structures.Generics
             this._genes = gene;
         }
 
-        public abstract BIChromosome Generate(int length);
+        public abstract object New(object[] arguments);
 
         public override string ToString()
         {

@@ -20,10 +20,7 @@ namespace GA.Structures.Generics
             return new Gene<T>[length];
         }
 
-        public object New(object[] arguments)
-        {
-            return this.New(arguments);
-        }
+        public abstract object New(object[] arguments);
 
         public override string ToString()
         {

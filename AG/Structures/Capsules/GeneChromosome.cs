@@ -24,14 +24,14 @@ namespace GA.Structures.Capsules
             this._chromosome = chromosome;
         }
 
-        public override GeneChromosome<T, E, F> Generate()
+        public override object New(object[] arguments)
         {
-            return new GeneChromosome<T, E, F>((T)this._chromosome.Generate(0));
+            return new GeneChromosome<T, E, F>((T)this._chromosome.New(new object[]{ }));
         }
 
-        public GeneChromosome<T, E, F>[] GenerateArray(int size)
+        public object[] GenerateArray(int length)
         {
-            return new GeneChromosome<T, E, F>[size];
+            return new GeneChromosome<T, E, F>[length];
         }
 
         public override string ToString()

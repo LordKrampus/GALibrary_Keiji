@@ -58,11 +58,11 @@ namespace GA.Structures.Binaries
             this._target = target;
         }
 
-        public override TargetBinaryChromosome Generate(int length)
+        public override TargetBinaryChromosome New(object[] arguments)
         {
-            BinaryGene[] newGenes = new BinaryGene[length];
+            BinaryGene[] newGenes = new BinaryGene[this.Count];
 
-            for (int i = 0; i < length; i++)
+            for (int i = 0; i < this.Count; i++)
                 newGenes[i] = new BinaryGene(false);
 
             return new TargetBinaryChromosome(newGenes, this._target);

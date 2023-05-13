@@ -39,11 +39,11 @@ namespace GA.Structures.Binaries
         public BinaryChromosome(BinaryGene[] genes) : base(genes)
         { }
 
-        public override BinaryChromosome Generate(int length)
+        public override BinaryChromosome New(object[] arguments)
         {
-            BinaryGene[] newGenes = new BinaryGene[length];
-            for (int i = 0; i < length; i++)
-                newGenes[i] = this._genes[0].Generate();
+            BinaryGene[] newGenes = new BinaryGene[this.Count];
+            for (int i = 0; i < this.Count; i++)
+                newGenes[i] = (BinaryGene)this._genes[0].New(new object[] { });
 
             return new BinaryChromosome(newGenes);
         }

@@ -8,9 +8,9 @@ namespace GA.Structures.Binaries
     {
         public BinaryGene(bool value) : base(value) { }
 
-        public override BinaryGene Generate()
+        public override object New(object[] arguments)
         {
-            return new BinaryGene(false);
+            return new BinaryGene(this.Value);
         }
 
         public override string ToString()

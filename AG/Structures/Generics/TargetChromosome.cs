@@ -18,8 +18,6 @@ namespace GA.Structures.Generics
             this._target = target;
         }
 
-        public override abstract BIChromosome Generate(int length);
-
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();

@@ -6,10 +6,11 @@ using System.Text;
 
 namespace GA.Structures.Capsules
 {
-    public class DynamicChromosome<T, E, F, G> : Chromosome<T, G>
+    public class DynamicChromosome<T, E, F> : Chromosome<T, F>
         //where T : PersistentGene<E> where E : GeneChromosome<F> where F : BIChromosome
         //where T : PersistentGene<GeneChromosome<E, F, G>, G> where E : IChromosome<F, G> where F : IGene<G>
-        where T : PersistentGene<GeneChromosome<E, F, G>, G> where E : IChromosome<F, G> where F : IGene<G>
+        //where T : PersistentGene<GeneChromosome<E, F, G>, G> where E : IChromosome<F, G> where F : IGene<G>
+        where T : PersistentGene<GeneChromosome<Chromosome<E, F>, E, F>, F> where E : Gene<F>
     {
         private string _name;
         private double _limit;
@@ -47,9 +48,9 @@ namespace GA.Structures.Capsules
             this._limit = limit;
         }
 
-        public override BIChromosome Generate(int length)
+        public override BIChromosome New(object[] arguments)
         {
-            DynamicChromosome<T, E, F, G> newChromosome = new DynamicChromosome<T, E, F, G>(this._name, this._limit);
+            DynamicChromosome<T, E, F> newChromosome = new DynamicChromosome<T, E, F>(this._name, this._limit);
             newChromosome.Genes = new T[this.Genes.Length];
             for (int i = 0; i < this.Genes.Length; i++)
                 newChromosome.Genes[i] = this.Genes[i];
@@ -69,7 +70,7 @@ namespace GA.Structures.Capsules
             this.Genes = new List<T>(genes).ToArray();
         }
 
-        public void Clear()
+        public void ClearCombine()
         {
             this.Genes = Array.Empty<T>();
         }

@@ -22,14 +22,14 @@ namespace GA.Structures.Capsules
             this._persistence = persistence;
         }
 
-        public override PersistentGene<T, E> Generate()
+        public override object New(object[] arguments)
         {
             return new PersistentGene<T, E>(this._gene, this._name, this._persistence);
         }
 
-        public PersistentGene<T, E>[] GenerateArray(int size)
+        public object[] GenerateArray(int length)
         {
-            return new PersistentGene<T, E>[size];
+            return new PersistentGene<T, E>[length];
         }
 
         public override string ToString()

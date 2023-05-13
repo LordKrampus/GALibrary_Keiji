@@ -26,12 +26,12 @@ namespace GA.Structures.Integer
             this._maxValue = maxValue;
         }
 
-        public override IntegerChromosome Generate(int length)
+        public override object New(object[] arguments)
         {
             int size = base.Genes.Length;
             IntegerGene[] newGenes = new IntegerGene[size];
             for (int i = 0; i < size; i++)
-                newGenes[i] = new IntegerGene(0);
+                newGenes[i] = (IntegerGene)this.Genes[i].New(new object[] { });
             return new IntegerChromosome(newGenes, this._maxValue);
         }
 

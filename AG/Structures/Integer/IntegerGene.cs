@@ -8,7 +8,7 @@ namespace GA.Structures.Integer
     {
         public IntegerGene(int value) : base(value) { }
 
-        public override Gene<int> Generate()
+        public override object New(object[] arguments)
         {
             return new IntegerGene(base._value);
         }

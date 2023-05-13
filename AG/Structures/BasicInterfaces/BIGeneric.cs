@@ -7,7 +7,7 @@
         /// </summary>
         /// <param name="length">Size of the array.</param>
         /// <returns>An array for objects like this.</returns>
-        public object[] GenerateArray(int length);
+        //public object[] GenerateArray(int length);
 
         /// <summary>
         /// Constructor withou generics means.
