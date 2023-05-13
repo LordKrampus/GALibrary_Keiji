@@ -6,11 +6,14 @@ using System.Text;
 
 namespace GA.Structures.Capsules
 {
-    public class DynamicChromosome<T, E, F> : Chromosome<T, F>
-        //where T : PersistentGene<E> where E : GeneChromosome<F> where F : BIChromosome
-        //where T : PersistentGene<GeneChromosome<E, F, G>, G> where E : IChromosome<F, G> where F : IGene<G>
-        //where T : PersistentGene<GeneChromosome<E, F, G>, G> where E : IChromosome<F, G> where F : IGene<G>
-        where T : PersistentGene<GeneChromosome<Chromosome<E, F>, E, F>, F> where E : Gene<F>
+    public class DynamicChromosome<Caps, Chrom, Gen, Val> : Chromosome<Caps, Val>
+       //Chromosome<Caps, Gen1>
+       //where T : PersistentGene<E> where E : GeneChromosome<F> where F : BIChromosome
+       //where T : PersistentGene<GeneChromosome<E, F, G>, G> where E : IChromosome<F, G> where F : IGene<G>
+       //where T : PersistentGene<GeneChromosome<E, F, G>, G> where E : IChromosome<F, G> where F : IGene<G>
+       //where Caps : PersistentGene<Gen1> where Gen1 : GeneChromosome<Chrom, Gen2, Val> 
+       //where Chrom : IChromosome<Gen2, Val>where Gen2 : IGene<Val>
+       where Caps : PersistentGene<GeneChromosome<Chrom, Gen, Val>, Val> where Chrom : IChromosome<Gen, Val> where Gen : IGene<Val>
     {
         private string _name;
         private double _limit;
@@ -20,8 +23,8 @@ namespace GA.Structures.Capsules
             get
             {
                 double value = 0;
-                foreach (T chromosome in base.Genes)
-                    value += chromosome.Gene.Chromosome.Value;
+                foreach (Caps capsule in base.Genes)
+                    value += capsule.Gene.Chromosome.Value;
                 return value;
             }
         }
@@ -31,18 +34,18 @@ namespace GA.Structures.Capsules
             get
             {
                 double value = 0;
-                foreach (T chromosome in base.Genes)
-                    value += chromosome.Gene.Chromosome.MaxValue;
+                foreach (Caps capsule in base.Genes)
+                    value += capsule.Gene.Chromosome.MaxValue;
                 return value;
             }
         }
 
-        public int Count => this.Genes.Length;
+        public override int Count => this.Genes.Length;
 
         public double Limit => this._limit;
         public string Name => this._name;
 
-        public DynamicChromosome(string name, double limit) : base(Array.Empty<T>()) 
+        public DynamicChromosome(string name, double limit) : base(Array.Empty<Caps>()) 
         {
             this._name = name;
             this._limit = limit;
@@ -50,36 +53,37 @@ namespace GA.Structures.Capsules
 
         public override BIChromosome New(object[] arguments)
         {
-            DynamicChromosome<T, E, F> newChromosome = new DynamicChromosome<T, E, F>(this._name, this._limit);
-            newChromosome.Genes = new T[this.Genes.Length];
+            DynamicChromosome<Caps, Chrom, Gen, Val> newChromosome = 
+                new DynamicChromosome<Caps, Chrom, Gen, Val>(this._name, this._limit);
+            newChromosome.Genes = new Caps[this.Genes.Length];
             for (int i = 0; i < this.Genes.Length; i++)
                 newChromosome.Genes[i] = this.Genes[i];
             return newChromosome;
         }
 
-        public void AddGene(T gene)
+        public void AddGene(Caps gene)
         {
-            this.Genes = new List<T>(base.Genes)
+            this.Genes = new List<Caps>(base.Genes)
             {
                 gene
             }.ToArray();
         }
 
-        public void AddGenes(T[] genes)
+        public void AddGenes(Caps[] genes)
         {
-            this.Genes = new List<T>(genes).ToArray();
+            this.Genes = new List<Caps>(genes).ToArray();
         }
 
         public void ClearCombine()
         {
-            this.Genes = Array.Empty<T>();
+            this.Genes = Array.Empty<Caps>();
         }
 
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
 
-            foreach (T gene in this.Genes)
+            foreach (Caps gene in this.Genes)
                 sb.Append(gene.ToString() + " ");
 
             return sb.ToString();

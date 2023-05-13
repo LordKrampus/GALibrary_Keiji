@@ -7,23 +7,20 @@ using GA.Factories;
 
 namespace GA.Structures.Capsules
 {
-    public class ContainerChromosome<T, E, F> : Chromosome<E, F> 
-        //where T : GeneChromosome<G> where E : DynamicChromosome<F, G, H> where F : PersistentGene<G>
-        //where G : GeneChromosome<H> where H : BIChromosome
-        ///where T : GeneChromosome<DynamicChromosome<E, F, G, H>, E, H> where E : PersistentGene<GeneChromosome<F, G, H>, H>
-        //where F : IChromosome<G, H> where G : IGene<H> 
-        where T : GeneChromosome<DynamicChromosome<PersistentGene<GeneChromosome<IChromosome<E, F>, E, F>, F>, E, F>, E, F> where E : IGene<F>
+    public class ContainerChromosome<Gen1, Caps, Chrom, Gen2, Val> : Chromosome<Gen2, Val>
+        where Gen1 : GeneChromosome<DynamicChromosome<Caps, Chrom, Gen2, Val>, Caps, Val> where Caps : PersistentGene<GeneChromosome<Chrom, Gen2, Val>, Val>
+        where Chrom : IChromosome<Gen2, Val> where Gen2 : IGene<Val>
     {
-        private T[] _containers;
+        private Gen1[] _containers;
 
-        public T[] Containers => this._containers;
+        public Gen1[] Containers => this._containers;
 
         public override double Value
         {
             get
             {
                 double value = 0;
-                foreach (T container in this._containers)
+                foreach (Gen1 container in this._containers)
                     value += container.Chromosome.Value;
                 return value;
             }
@@ -34,27 +31,29 @@ namespace GA.Structures.Capsules
             get
             {
                 double value = 0;
-                foreach(T container in this._containers)
+                foreach(Gen1 container in this._containers)
                     value += container.Chromosome.MaxValue;
                 return value;
             }
         }
 
-        public ContainerChromosome(T[] containers) : base (Array.Empty<T>()) 
+        public override int Count => this._containers.Length;
+
+        public ContainerChromosome(Gen1[] containers) : base (Array.Empty<Gen2>()) 
         {
             this._containers = containers;
         }
 
-        public override ContainerChromosome<T, E, F, G, H> New(object[] arguments)
+        public override ContainerChromosome<Gen1, Caps, Chrom, Gen2, Val> New(object[] arguments)
         {
-            T[] newGenes = new T[this.Count];
+            Gen1[] newGenes = new Gen1[this.Count];
             for (int i = 0; i < this.Count; i++)
-                newGenes[i] = (T)this.Containers[i].New(new object[] { });
+                newGenes[i] = (Gen1)this.Containers[i].New(new object[] { });
 
-            return new ContainerChromosome<T, E, F, G, H>(newGenes);
+            return new ContainerChromosome<Gen1, Caps, Chrom, Gen2, Val>(newGenes);
         }
 
-        public void AddSequence(E[] sequence)
+        public void AddSequence(Caps[] sequence)
         {
             this.ClearContainers();
             int valuesCount = sequence.Length, containersCount = this._containers.Length;
@@ -110,7 +109,7 @@ namespace GA.Structures.Capsules
 
         public void ClearContainers()
         {
-            foreach(T container in this._containers)
+            foreach(Gen1 container in this._containers)
             {
                 container.Chromosome.ClearCombine();
             }
@@ -122,11 +121,11 @@ namespace GA.Structures.Capsules
         }
 
 
-        public E[] GetFlatSequence()
+        public Caps[] GetFlatSequence()
         {
-            List<E> sequence = new List<E>();
+            List<Caps> sequence = new List<Caps>();
             int containersCount = this._containers.Length, sequenceCount;
-            E gene;
+            Caps gene;
             for (int i = 0; i < containersCount; i++)
             {
                 sequenceCount = this._containers[i].Chromosome.Genes.Length;

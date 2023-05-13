@@ -133,7 +133,7 @@ namespace GA.Factories
         public static PersistentGene<T, E>[]? Reflection_CreateEmptyArrayPersistentGene<T, E>(PersistentGene<T, E> gene, int size)
             where T : IGene<E>
         {
-            return gene.GenerateArray(size);
+            return (PersistentGene<T, E>[])gene.GenerateArray(size);
         }
 
         public BIGene[]? CreateEmptyArrayPersistentGene(Type[] tGenerics, object gene, int size)

@@ -17,7 +17,7 @@ namespace GA.Structures.Populations
 
         public IIndividual<T, E, F>[] Individuals => _individuals;
         public BIIndividual[] ObjIndividuals => _individuals;
-        public int Count => _size;
+        public int Count => this._size;
 
         public int Generation
         { get => _generation; set => _generation = value; }
@@ -59,6 +59,11 @@ namespace GA.Structures.Populations
             this._generation = 0;
 
             this._bestIndividual = null;
+        }
+
+        public object New(object[] arguments)
+        {
+            throw new NotImplementedException();
         }
 
         public object Clone()

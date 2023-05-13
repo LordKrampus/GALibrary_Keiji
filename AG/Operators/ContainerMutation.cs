@@ -8,8 +8,8 @@ using static System.Collections.Specialized.BitVector32;
 namespace GALibrary.Operators
 {
     public class ContainerMutation<T, E, F, G, H> : Mutation<T, G, H>
-        where T : ContainerChromosome<GeneChromosome<DynamicChromosome<E, F, G, H>, E, H>, E, F, G, H> where E : PersistentGene<GeneChromosome<F, G, H>, H>
-        where F : IChromosome<G, H> where G : IGene<H>
+       where T : ContainerChromosome<GeneChromosome<DynamicChromosome<E, F, G, H>, E, H>, E, F, G, H> where E : PersistentGene<GeneChromosome<F, G, H>, H>
+       where F : IChromosome<G, H> where G : IGene<H>
     {
         public ContainerMutation(double factor) : base(factor)
         { }

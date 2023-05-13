@@ -5,7 +5,7 @@ using GA.Structures.Interfaces;
 
 namespace GA.Structures.Individuals
 {
-    public class Individual<T, E, F> : IIndividual<T, E, F> where T: IChromosome<E, F> where E : IGene<F>
+    public class Individual<T, E, F> : IIndividual<T, E, F> where T : IChromosome<E, F> where E : IGene<F>
     {
         protected T _chromosome;
         protected double _fitness;
@@ -26,11 +26,17 @@ namespace GA.Structures.Individuals
             _fitness = .0f;
         }
 
+        public object New(object[] arguments)
+        {
+            int iSize = _chromosome.Genes.Length;
+            return new Individual<T, E, F>((T)_chromosome.New(new object[] { iSize }));
+        }
+
+
         public virtual object Clone()
         {
             int iSize = _chromosome.Genes.Length;
-
-            T newChromosome = (T)_chromosome.Generate(iSize);
+            T newChromosome = (T)_chromosome.New(new object[] { iSize });
 
             E gene;
             E newGene;
@@ -38,7 +44,7 @@ namespace GA.Structures.Individuals
             {
                 gene = _chromosome.Genes[i];
 
-                newGene = (E)gene.Generate();
+                newGene = (E)gene.New(new object[] { });
                 newGene.Value = gene.Value;
 
                 newChromosome.Genes[i] = newGene;

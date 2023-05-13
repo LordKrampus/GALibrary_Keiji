@@ -7,8 +7,8 @@ using System;
 namespace GALibrary.Operators
 {
     public class ContainerCrossover<T, E, F, G, H> : Crossover<T, G, H>
-        where T : ContainerChromosome<GeneChromosome<DynamicChromosome<E, F, G, H>, E, H>, E, F, G, H> where E : PersistentGene<GeneChromosome<F, G, H>, H>
-        where F : IChromosome<G, H> where G : IGene<H>
+       where T : ContainerChromosome<GeneChromosome<DynamicChromosome<E, F, G, H>, E, H>, E, F, G, H> where E : PersistentGene<GeneChromosome<F, G, H>, H>
+       where F : IChromosome<G, H> where G : IGene<H>
     {
         public ContainerCrossover(double factor) : base(factor)
         { }
