@@ -32,7 +32,7 @@ namespace GA.Operators
             return new T[] { a, b };
         }
 
-        public E[][] Apply(E[] aE, E[] bE)
+        public virtual E[][] Apply(E[] aE, E[] bE)
         {
             E[][] aSections;
             E[][] bSections;

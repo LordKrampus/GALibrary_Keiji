@@ -17,6 +17,11 @@ namespace GA.Utilities
             return (this._generator.Next(2) < 1? false : true);
         }
 
+        public double SortContinue(double lInf, double lSup)
+        {
+            return this._generator.NextDouble() * (lSup - lInf) + lInf;
+        }
+
         // inclusivo
         public int SortBefore(int last)
         {
