@@ -32,6 +32,11 @@ namespace GA.Structures.Individuals
             return new Individual<T, E, F>((T)_chromosome.New(new object[] { iSize }));
         }
 
+        public object[] GenerateArray(int length)
+        {
+            return new IIndividual<T, E, F>[length];
+        }
+
 
         public virtual object Clone()
         {

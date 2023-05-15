@@ -5,10 +5,11 @@ using GA.Operators;
 using GA.Structures.Binaries;
 using GA.Structures.Capsules;
 using GALibrary.Operators;
+using GALibrary.Factories;
 
 namespace GA.Factories
 {
-    public class FOperator
+    public class FOperator : IFactory
     {
         private static FOperator? _instance;
 
@@ -109,13 +110,27 @@ namespace GA.Factories
                     reflectionMethod = "Reflection_CreateTargetOperator";
                     break;
 
+                case Type t when t.Equals(typeof(ContainerChromosome<,,,,>)):
+                    reflectionMethod = "Reflection_CreateContainerOperator";
+                    break;
+
                 default:
                     throw new Exception();
             }
 
             return typeof(FOperator).GetMethod(reflectionMethod)?.
-                        MakeGenericMethod(tGenerics).
-                        Invoke(null, new object[] { tOperator, arguments });
+                        MakeGenericMethod(tGenerics).Invoke(null, new object[] { tOperator, arguments });
+        }
+
+        public object? CreateItem(Type tOperator, Type[] tGenerics, object[] arguments)
+        {
+            int size = tGenerics.Length - 1;
+            Type[] newTGenerics = new Type[size];
+            for (int i = 0; i < size; i++)
+            {
+                newTGenerics[i] = tGenerics[i];
+            }
+            return GenerateOperator(tGenerics[tGenerics.Length - 1], tOperator, newTGenerics, arguments);
         }
 
         public static IOperator<T, G, H> Reflection_CreateContainerCrossover<T, E, F, G, H>(double factor)
@@ -130,6 +145,23 @@ namespace GA.Factories
             where F : IChromosome<G, H> where G : IGene<H>
         {
             return new ContainerMutation<T, E, F, G, H>(factor);
+        }
+
+        public static BIOperator? Reflection_CreateContainerOperator<T, E, F, G, H>(Type tOperator, double factor)
+            where T : ContainerChromosome<GeneChromosome<DynamicChromosome<E, F, G, H>, E, H>, E, F, G, H>
+            where E : PersistentGene<GeneChromosome<F, G, H>, H> where F : IChromosome<G, H> where G : IGene<H>
+        {
+            switch (tOperator)
+            {
+                case Type t when t.Equals(typeof(Crossover<,,>)):
+                    return Reflection_CreateContainerCrossover<T, E, F, G, H>(factor);
+
+                case Type t when t.Equals(typeof(Mutation<,,>)):
+                    return Reflection_CreateContainerMutation<T, E, F, G, H>(factor);
+
+                default:
+                    throw new Exception();
+            }
         }
 
         public BIOperator? CreateContainerCrossover(Type[] tGenerics, double factor)
@@ -163,17 +195,17 @@ namespace GA.Factories
                 MakeGenericMethod(tGenerics).Invoke(null, new object[] { factor });
         }
 
-        public static IOperator<T, E, F>[] Reflection_CreateEmptyArray<T, E, F>(int size)
+        public static IOperator<T, E, F>[] Reflection_CreateEmptyArray<T, E, F>(Type type, int size)
             where T : IChromosome<E, F> where E : IGene<F>
         {
             return new IOperator<T, E, F>[size];
         }
 
-        public object[]? CreateEmptyArray(Type[] TGenerics, int size)
+        public object[]? CreateEmptyArray(Type type, Type[] TGenerics, int size)
         {
             return (object[]?)typeof(FOperator).GetMethod("Reflection_CreateEmptyArray")?.
                          MakeGenericMethod(TGenerics).
-                         Invoke(null, new object[] { size });
+                         Invoke(null, new object[] { type, size });
         }
     }
 }

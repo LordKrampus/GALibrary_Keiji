@@ -61,6 +61,11 @@ namespace GA.Structures.Capsules
             return newChromosome;
         }
 
+        public override object[] GenerateArray(int length)
+        {
+            return new DynamicChromosome<Caps, Chrom, Gen, Val>[length];
+        }
+
         public void AddGene(Caps gene)
         {
             this.Genes = new List<Caps>(base.Genes)

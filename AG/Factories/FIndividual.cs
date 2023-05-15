@@ -1,10 +1,11 @@
 ﻿using GA.Structures.Individuals;
 using GA.Structures.Interfaces;
 using GA.Structures.BasicInterfaces;
+using GALibrary.Factories;
 
 namespace GA.Factories
 {
-    public class FIndividual
+    public class FIndividual : IFactory
     {
         private static FIndividual _instance;
 
@@ -12,38 +13,29 @@ namespace GA.Factories
 
         public static FIndividual Instance => _instance ??= new FIndividual();
 
-        public static IIndividual<T, E, F> Reflection_CreateIndividual<T, E, F>(Type type, T chromosome) 
+        public static IIndividual<T, E, F> Reflection_CreateIndividual<T, E, F>(T chromosome) 
             where T : IChromosome<E, F> where E : IGene<F>
         {
-            switch (type) 
-            {
-                case Type t when t.Equals(typeof(Individual<,,>)):
-                    return new Individual<T, E, F>(chromosome);
-
-                default:
-                    throw new NotImplementedException();
-            }
+            return new Individual<T, E, F>(chromosome);
         }
 
-        public object? CreateIndividual(Type tIndividual, Type[] tGenerics,
-            object chromosome)
+        public object? CreateItem(Type tIndividual, Type[] tGenerics, object[] arguments)
         {
             return typeof(FIndividual).GetMethod("Reflection_CreateIndividual")?.
-                MakeGenericMethod(tGenerics)
-                .Invoke(null, new object[] { tIndividual, chromosome });
+                MakeGenericMethod(tGenerics).Invoke(null, arguments);
         }
 
-        public static IIndividual<T, E, F>[] Reflection_CreateEmptyArray<T, E, F>(int size)
+        public static IIndividual<T, E, F>[] Reflection_CreateEmptyArray<T, E, F>(Type type, int size)
             where T : IChromosome<E, F> where E : IGene<F>
         {
             return new IIndividual<T, E, F>[size];
         }
 
-        public BIIndividual[]? CreateEmptyArray(Type[] tGenerics, int size)
+        public object[]? CreateEmptyArray(Type type, Type[] tGenerics, int size)
         {
             return (BIIndividual[]?)typeof(FIndividual).GetMethod("Reflection_CreateEmptyArray")?.
                MakeGenericMethod(tGenerics)
-               .Invoke(null, new object[] { size });
+               .Invoke(null, new object[] { type, size });
         }
     }
 }

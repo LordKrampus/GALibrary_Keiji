@@ -44,15 +44,6 @@ namespace GA.Structures.Capsules
             this._containers = containers;
         }
 
-        public override ContainerChromosome<Gen1, Caps, Chrom, Gen2, Val> New(object[] arguments)
-        {
-            Gen1[] newGenes = new Gen1[this.Count];
-            for (int i = 0; i < this.Count; i++)
-                newGenes[i] = (Gen1)this.Containers[i].New(new object[] { });
-
-            return new ContainerChromosome<Gen1, Caps, Chrom, Gen2, Val>(newGenes);
-        }
-
         public void AddSequence(Caps[] sequence)
         {
             this.ClearContainers();
@@ -139,6 +130,20 @@ namespace GA.Structures.Capsules
                 }
             }
             return sequence.ToArray();
+        }
+
+        public override ContainerChromosome<Gen1, Caps, Chrom, Gen2, Val> New(object[] arguments)
+        {
+            Gen1[] newGenes = new Gen1[this.Count];
+            for (int i = 0; i < this.Count; i++)
+                newGenes[i] = (Gen1)this.Containers[i].New(new object[] { });
+
+            return new ContainerChromosome<Gen1, Caps, Chrom, Gen2, Val>(newGenes);
+        }
+
+        public override object[] GenerateArray(int length)
+        {
+            return new ContainerChromosome<Gen1, Caps, Chrom, Gen2, Val>[length];
         }
 
         public override string ToString()

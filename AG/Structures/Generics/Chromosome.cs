@@ -23,6 +23,11 @@ namespace GA.Structures.Generics
 
         public abstract object New(object[] arguments);
 
+        public virtual object[] GenerateArray(int length)
+        {
+            return new IChromosome<T, E>[length];
+        }
+
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();

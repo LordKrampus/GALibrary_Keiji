@@ -2,10 +2,11 @@
 
 using GA.Structures.Integer;
 using GA.Structures.Binaries;
+using GALibrary.Factories;
 
 namespace GA.Factories
 {
-    public class FGene
+    public class FGene : IFactory
     {
         private static FGene _instance;
 
@@ -13,24 +14,24 @@ namespace GA.Factories
 
         public static FGene Instance => _instance ??= new FGene();
 
-        public BIGene CreateGene(Type tGene, Type tValue, object value)
+        public object CreateItem(Type type, Type[] tGenerics, object[] arguments)
         {
-            switch (tGene)
+            switch (type)
             {
                 case Type t when t.Equals(typeof(BinaryGene)):
-                    return new BinaryGene((bool)value);
+                    return new BinaryGene((bool)arguments[0]);
 
                 case Type t when t.Equals(typeof(IntegerGene)):
-                    return new IntegerGene((int)value);
+                    return new IntegerGene((int)arguments[0]);
 
                 default:
                     throw new Exception();
             }
         }
 
-        public static IGene<T>[]? Reflection_CreateEmptyArray<T>(Type tGene, int size)
+        public static IGene<T>[]? Reflection_CreateEmptyArray<T>(Type type, int size)
         {
-            switch (tGene)
+            switch (type)
             {
                 case Type t when t.Equals(typeof(BinaryGene)):
                     return new BinaryGene[size] as IGene<T>[];
@@ -41,12 +42,13 @@ namespace GA.Factories
                 default:
                     throw new Exception();
             }
+            //return new IGene<T>[size];
         }
 
-        public BIGene[]? CreateEmptyArray(Type tGene, Type tValue, int size)
+        public object[]? CreateEmptyArray(Type type, Type[] tGenerics, int size)
         {
-            return (BIGene[]?)typeof(FGene).GetMethod("Reflection_CreateEmptyArray")?.
-                MakeGenericMethod(tValue).Invoke(null, new object[] { tGene, size });
+            return (object[]?)typeof(FGene).GetMethod("Reflection_CreateEmptyArray")?.
+                MakeGenericMethod(tGenerics).Invoke(null, new object[] { type, size });
         }
     }
 }

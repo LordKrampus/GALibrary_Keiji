@@ -15,7 +15,7 @@ namespace GA.Structures.Generics
             this._value = value;
         }
 
-        public object[] GenerateArray(int length)
+        public virtual object[] GenerateArray(int length)
         {
             return new Gene<T>[length];
         }

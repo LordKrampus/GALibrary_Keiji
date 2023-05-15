@@ -27,7 +27,7 @@ namespace GA.Structures.Capsules
             return new PersistentGene<Gen, Val>(this._gene, this._name, this._persistence);
         }
 
-        public object[] GenerateArray(int length)
+        public override object[] GenerateArray(int length)
         {
             return new PersistentGene<Gen, Val>[length];
         }

@@ -29,7 +29,7 @@ namespace GA.Structures.Capsules
             return new GeneChromosome<Chrom, Gen, Val>((Chrom)this._chromosome.New(new object[]{ }));
         }
 
-        public object[] GenerateArray(int length)
+        public override object[] GenerateArray(int length)
         {
             return new GeneChromosome<Chrom, Gen, Val>[length];
         }

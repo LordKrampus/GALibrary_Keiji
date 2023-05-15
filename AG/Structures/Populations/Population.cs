@@ -66,6 +66,11 @@ namespace GA.Structures.Populations
             throw new NotImplementedException();
         }
 
+        public object[] GenerateArray(int length)
+        {
+            return new IPopulation<T, E, F>[length];
+        }
+
         public object Clone()
         {
             throw new NotImplementedException();

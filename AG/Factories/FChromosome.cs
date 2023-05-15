@@ -2,10 +2,11 @@
 
 using GA.Structures.Integer;
 using GA.Structures.Binaries;
+using GALibrary.Factories;
 
 namespace GA.Factories
 {
-    public class FChromosome 
+    public class FChromosome : IFactory
     {
         private static FChromosome _instance;
 
@@ -13,32 +14,48 @@ namespace GA.Factories
 
         private FChromosome() { }
 
-        public object? GenerateChromosome(Type tChromosome, BIGene[] genes, object[] arguments)
+        public object? CreateItem(Type type, Type[] tGenerics, object[] arguments)
         {
-            switch (tChromosome)
+            switch (type)
             {
                 case Type t when t.Equals(typeof(BinaryChromosome)):
-                    return new BinaryChromosome(genes as BinaryGene[]);
+                    return new BinaryChromosome((BinaryGene[])arguments[0]);
 
                 case Type t when t.Equals(typeof(TargetBinaryChromosome)):
-                    return new TargetBinaryChromosome(genes as BinaryGene[], (int)arguments[0]);
+                    return new TargetBinaryChromosome((BinaryGene[])arguments[0], (int)arguments[1]);
+
                 case Type t when t.Equals(typeof(IntegerChromosome)):
-                    return new IntegerChromosome(genes as IntegerGene[], maxValue: (int)arguments[0]);
+                    return new IntegerChromosome((IntegerGene[])arguments[0], maxValue: (int)arguments[1]);
 
                 default:
                     throw new ArgumentException();
             }
         }
 
-        public static IChromosome<T, E>[] Reflection_CreateEmptyArray<T, E>(int size) where T : IGene<E>
+        public static object[] Reflection_CreateEmptyArray<T, E>(Type type, int size) where T : IGene<E>
         {
+            switch (type)
+            {
+                case Type t when t.Equals(typeof(BinaryChromosome)):
+                    return new BinaryChromosome[size] ;
+
+                case Type t when t.Equals(typeof(TargetBinaryChromosome)):
+                    return new TargetBinaryChromosome[size];
+
+                case Type t when t.Equals(typeof(IntegerChromosome)):
+                    return new IntegerChromosome[size];
+
+                default:
+                    throw new ArgumentException();
+            }
+
             return new IChromosome<T, E>[size];
         }
 
-        public BIChromosome[]? CreateEmptyArray(Type[] tGenerics, int size)
+        public object[]? CreateEmptyArray(Type type, Type[] tGenerics, int size)
         {
             return (BIChromosome[]?)typeof(FChromosome).GetMethod("Reflection_CreateEmptyArray")?.
-                MakeGenericMethod(tGenerics).Invoke(null, new object[] { size });
+                MakeGenericMethod(tGenerics).Invoke(null, new object[] { type, size });
         }
 
     }
