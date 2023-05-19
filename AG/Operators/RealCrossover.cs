@@ -15,8 +15,6 @@ namespace GA.Operators
         protected double Beta { get => this._beta; }
         protected double SubOperator { get => this._beta; }
 
-
-
         public RealCrossover(double beta, bool isSum, double factor) : base(factor) 
         {
             this._beta = beta;

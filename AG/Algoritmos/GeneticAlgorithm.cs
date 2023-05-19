@@ -59,10 +59,11 @@ namespace GA.Algoritmos
         public BIIndividual[] ObjCacheBestIndividuals => this._cacheBestIndividuals.ToArray();
         public double[] CacheMeans => this._cacheMeans.ToArray();
 
-        public GeneticAlgorithm(IPopulation<T, E, F> population, 
+        public GeneticAlgorithm(IPopulation<T, E, F> population, int limitGenerations,
             IFunction function, ISelectionMethod<T, E, F> selectionMethods, IOperator<T, E, F>[] operators, bool hasElitismo = false)
         {
             this._population = population;
+            this._limitGenerations = limitGenerations;
             this._function = function;
             this._sMethod = selectionMethods;
             this._operators = operators;

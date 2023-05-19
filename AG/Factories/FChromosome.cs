@@ -3,6 +3,8 @@
 using GA.Structures.Integer;
 using GA.Structures.Binaries;
 using GALibrary.Factories;
+using GALibrary.Structures.Real;
+using System.Drawing;
 
 namespace GA.Factories
 {
@@ -26,6 +28,9 @@ namespace GA.Factories
 
                 case Type t when t.Equals(typeof(IntegerChromosome)):
                     return new IntegerChromosome((IntegerGene[])arguments[0], maxValue: (int)arguments[1]);
+                
+                case Type t when t.Equals(typeof(RealChromosome)):
+                    return new RealChromosome((RealGene[])arguments[0]);
 
                 default:
                     throw new ArgumentException();
@@ -44,6 +49,9 @@ namespace GA.Factories
 
                 case Type t when t.Equals(typeof(IntegerChromosome)):
                     return new IntegerChromosome[size];
+
+                case Type t when t.Equals(typeof(RealChromosome)):
+                    return new RealChromosome[size];
 
                 default:
                     throw new ArgumentException();

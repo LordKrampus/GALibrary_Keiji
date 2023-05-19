@@ -3,6 +3,7 @@
 using GA.Structures.Integer;
 using GA.Structures.Binaries;
 using GALibrary.Factories;
+using GALibrary.Structures.Real;
 
 namespace GA.Factories
 {
@@ -24,6 +25,9 @@ namespace GA.Factories
                 case Type t when t.Equals(typeof(IntegerGene)):
                     return new IntegerGene((int)arguments[0]);
 
+                case Type t when t.Equals(typeof(RealGene)):
+                    return new RealGene((double)arguments[0]);
+
                 default:
                     throw new Exception();
             }
@@ -38,6 +42,9 @@ namespace GA.Factories
 
                 case Type t when t.Equals(typeof(IntegerGene)):
                     return new IntegerGene[size] as IGene<T>[];
+
+                case Type t when t.Equals(typeof(RealGene)):
+                    return new RealGene[size] as IGene<T>[];
 
                 default:
                     throw new Exception();

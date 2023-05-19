@@ -17,11 +17,13 @@ namespace GA.Factories
         public static FAlgorithm Instance = _instance ??= new FAlgorithm();
 
         public static IGeneticAlgorithm<T, E, F> Reflection_CreateAlgorithm<T, E, F>(IPopulation<T, E, F> population,
-            IFunction function, ISelectionMethod<T, E, F> method, IOperator<T, E, F>[] operadores, object[] arguments)
+            IFunction function, ISelectionMethod<T, E, F> method, object[] operators, object[] arguments)
             where T : IChromosome<E, F> where E: IGene<F>
         {
-            return new GeneticAlgorithm<T, E, F>(population, function,
-                method, operadores, hasElitismo: (bool)arguments[0]);
+            IOperator<T, E, F>[] castOperators = new IOperator<T, E, F>[] { (IOperator<T, E, F>)operators[0], (IOperator<T, E, F>)operators[1] };
+
+            return new GeneticAlgorithm<T, E, F>(population, (int)arguments[0],
+                function, method, castOperators, hasElitismo: (bool)arguments[1]);
         }
 
         public object? CreateItem(Type tAlgorithm, Type[] tGenerics, object population, object function,

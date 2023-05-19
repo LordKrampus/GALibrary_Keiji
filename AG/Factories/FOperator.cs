@@ -6,6 +6,7 @@ using GA.Structures.Binaries;
 using GA.Structures.Capsules;
 using GALibrary.Operators;
 using GALibrary.Factories;
+using GALibrary.Structures.Real;
 
 namespace GA.Factories
 {
@@ -63,6 +64,9 @@ namespace GA.Factories
                 case Type t when t.Equals(typeof(TargetBinaryChromosome)):
                     return CreateBinaryCrossover<T, E, F, TargetBinaryChromosome>(arguments);
 
+                case Type t when t.Equals(typeof(RealChromosome)):
+                    return CreateRealCrossover<T, E, F, RealChromosome>(arguments);
+
                 default:
                     throw new Exception();
             }
@@ -79,11 +83,19 @@ namespace GA.Factories
                 case Type t when t.Equals(typeof(TargetBinaryChromosome)):
                     return CreateBinaryMutation<T, E, F, TargetBinaryChromosome>(arguments);
 
+                case Type t when t.Equals(typeof(RealChromosome)):
+                    return CreateRealMutation<T, E, F, RealChromosome>(arguments);
+
                 default:
                     throw new Exception();
             }
         }
 
+        private static IOperator<T, E, F> CreateRealCrossover<T, E, F, G>(object[] arguments)
+            where T : IChromosome<E, F> where E : IGene<F> where G : RealChromosome
+        {
+            return (IOperator<T, E, F>) new RadCliffCrossover((double)arguments[0], (bool)arguments[1], (double)arguments[2]);
+        }
 
         private static IOperator<T, E, F> CreateBinaryCrossover<T, E, F, G>(object[] arguments)
             where T : IChromosome<E, F> where E : IGene<F> where G : BinaryChromosome
@@ -96,6 +108,13 @@ namespace GA.Factories
         {
             return (IOperator<T, E, F>)new BinaryMutation<G>((double)arguments[0]);
         }
+
+        private static IOperator<T, E, F> CreateRealMutation<T, E, F, G>(object[] arguments)
+            where T : IChromosome<E, F> where E : IGene<F> where G : RealChromosome
+        {
+            return (IOperator<T, E, F>)new RealMutation<G>((double)arguments[0], (double)arguments[1], (double)arguments[2]);
+        }
+
 
         public object? GenerateOperator(Type tChromosomeInterface, Type tOperator, Type[] tGenerics, object[] arguments)
         {
@@ -147,17 +166,17 @@ namespace GA.Factories
             return new ContainerMutation<T, E, F, G, H>(factor);
         }
 
-        public static BIOperator? Reflection_CreateContainerOperator<T, E, F, G, H>(Type tOperator, double factor)
+        public static BIOperator? Reflection_CreateContainerOperator<T, E, F, G, H>(Type tOperator, object[] arguments)
             where T : ContainerChromosome<GeneChromosome<DynamicChromosome<E, F, G, H>, E, H>, E, F, G, H>
             where E : PersistentGene<GeneChromosome<F, G, H>, H> where F : IChromosome<G, H> where G : IGene<H>
         {
             switch (tOperator)
             {
                 case Type t when t.Equals(typeof(Crossover<,,>)):
-                    return Reflection_CreateContainerCrossover<T, E, F, G, H>(factor);
+                    return Reflection_CreateContainerCrossover<T, E, F, G, H>(factor: (double)arguments[0]);
 
                 case Type t when t.Equals(typeof(Mutation<,,>)):
-                    return Reflection_CreateContainerMutation<T, E, F, G, H>(factor);
+                    return Reflection_CreateContainerMutation<T, E, F, G, H>((double)arguments[0]);
 
                 default:
                     throw new Exception();
