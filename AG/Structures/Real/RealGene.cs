@@ -10,7 +10,7 @@ namespace GALibrary.Structures.Real
 
         public override object New(object[] arguments)
         {
-            return this.Value;
+            return new RealGene(this.Value);
         }
     }
 }

@@ -7,6 +7,7 @@ using GA.Structures.Capsules;
 using GALibrary.Operators;
 using GALibrary.Factories;
 using GALibrary.Structures.Real;
+using GA.Functions.Interfaces;
 
 namespace GA.Factories
 {
@@ -23,6 +24,14 @@ namespace GA.Factories
         {
             switch (type)
             {
+                //case Type t when t.Equals(typeof(WrigthCrossover)):
+                //    return (IOperator<T, E, F>)
+                //        new WrigthCrossover((IFunction)arguments[0], (bool)arguments[1], (double)arguments[2], (bool)arguments[3], (double)arguments[4]);
+
+                //case Type t when t.Equals(typeof(RadCliffCrossover)):
+                //    return (IOperator<T, E, F>)
+                //        new RadCliffCrossover((double)arguments[0], (bool)arguments[1], (double)arguments[2]);
+
                 case Type t when t.Equals(typeof(Crossover<,,>)):
                     return Reflection_CreateCrossover<T, E, F>(typeof(T), arguments);
 
