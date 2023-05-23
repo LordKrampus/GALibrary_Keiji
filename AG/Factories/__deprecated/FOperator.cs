@@ -103,7 +103,7 @@ namespace GA.Factories
         private static IOperator<T, E, F> CreateRealCrossover<T, E, F, G>(object[] arguments)
             where T : IChromosome<E, F> where E : IGene<F> where G : RealChromosome
         {
-            return (IOperator<T, E, F>) new RadCliffCrossover((double)arguments[0], (bool)arguments[1], (double)arguments[2]);
+            return (IOperator<T, E, F>) new RadcliffeCrossover((double)arguments[0], (bool)arguments[1], (double)arguments[2]);
         }
 
         private static IOperator<T, E, F> CreateBinaryCrossover<T, E, F, G>(object[] arguments)

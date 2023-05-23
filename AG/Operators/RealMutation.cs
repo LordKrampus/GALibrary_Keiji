@@ -7,7 +7,7 @@ using GALibrary.Structures.Real;
 
 namespace GA.Operators
 {
-    public class RealMutation<T> : Mutation<T, RealGene, double> where T : RealChromosome
+    public class RealMutation : Mutation<RealChromosome, RealGene, double> 
     {
         private double _lInf, _lSup; // limites
 

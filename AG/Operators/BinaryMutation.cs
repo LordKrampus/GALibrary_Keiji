@@ -5,7 +5,7 @@ using System;
 
 namespace GA.Operators
 {
-    public class BinaryMutation<T> : Mutation<T, BinaryGene, bool> where T : BinaryChromosome
+    public class BinaryMutation : Mutation<BinaryChromosome, BinaryGene, bool>
     {
         public BinaryMutation(double factor) : base(factor) { }
 

@@ -7,8 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Factories\__deprecated\**" />
     <Compile Remove="Structures\_deprecated\**" />
+    <EmbeddedResource Remove="Factories\__deprecated\**" />
     <EmbeddedResource Remove="Structures\_deprecated\**" />
+    <None Remove="Factories\__deprecated\**" />
     <None Remove="Structures\_deprecated\**" />
   </ItemGroup>
 

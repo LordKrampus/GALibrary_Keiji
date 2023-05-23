@@ -6,7 +6,7 @@ using GA.Structures.Utilities;
 
 namespace GA.Operators
 {
-    public class BinaryCrossover<T> : Crossover<T, BinaryGene, bool> where T : BinaryChromosome
+    public class BinaryCrossover : Crossover<BinaryChromosome, BinaryGene, bool> 
     {
 
         public BinaryCrossover(double factor) : base(factor) { }

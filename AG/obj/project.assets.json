@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\angel\\Documents\\Trabalhos\\MESTRADO\\DISCIPLINAS\\AG_Keiji\\GALibrary_Keiji\\AG\\GALibrary.csproj",
+      "projectUniqueName": "C:\\Users\\angel\\OneDrive - Universidade Federal de Uberlândia\\Documentos\\Trabalhos\\Disciplinas\\AG_Keiji\\AG\\GALibrary_Keiji\\AG\\GALibrary.csproj",
       "projectName": "GALibrary",
-      "projectPath": "C:\\Users\\angel\\Documents\\Trabalhos\\MESTRADO\\DISCIPLINAS\\AG_Keiji\\GALibrary_Keiji\\AG\\GALibrary.csproj",
+      "projectPath": "C:\\Users\\angel\\OneDrive - Universidade Federal de Uberlândia\\Documentos\\Trabalhos\\Disciplinas\\AG_Keiji\\AG\\GALibrary_Keiji\\AG\\GALibrary.csproj",
       "packagesPath": "C:\\Users\\angel\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\angel\\Documents\\Trabalhos\\MESTRADO\\DISCIPLINAS\\AG_Keiji\\GALibrary_Keiji\\AG\\obj\\",
+      "outputPath": "C:\\Users\\angel\\OneDrive - Universidade Federal de Uberlândia\\Documentos\\Trabalhos\\Disciplinas\\AG_Keiji\\AG\\GALibrary_Keiji\\AG\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\angel\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -61,7 +61,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
       }
     }
   }

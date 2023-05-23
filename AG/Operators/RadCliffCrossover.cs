@@ -7,9 +7,9 @@ using GALibrary.Structures.Real;
 
 namespace GA.Operators
 {
-    public class RadCliffCrossover : RealCrossover
+    public class RadcliffeCrossover : RealCrossover
     {
-        public RadCliffCrossover(double beta, bool isSum, double factor) : base(beta, isSum, factor) 
+        public RadcliffeCrossover(double beta, bool isSum, double factor) : base(beta, isSum, factor) 
         { }
 
         public override RealGene[][] Apply(RealGene[] aE, RealGene[] bE)
