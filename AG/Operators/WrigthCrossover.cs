@@ -10,14 +10,9 @@ namespace GA.Operators
 {
     public class WrigthCrossover : RealCrossover
     {
-        IFunction _function;
-        bool _isMinimization;
-
-        public WrigthCrossover(IFunction function, bool isMinimization, double beta, bool isSum, double factor) : base(beta, isSum, factor) 
-        {
-            this._function = function;
-            this._isMinimization = isMinimization;
-        }
+        public WrigthCrossover(IFunction function, double factor, double beta, bool isSum) : 
+            base(function, factor, beta, isSum) 
+        { }
 
         public override RealChromosome[] Apply(RealChromosome a, RealChromosome b)
         {
@@ -43,13 +38,13 @@ namespace GA.Operators
 
             double[] fitness = new double[3];
             Individual<RealChromosome, RealGene, double> individual = new Individual<RealChromosome, RealGene, double>(new RealChromosome(fs[0]));
-            fitness[0] = this._function.Calc(individual);
+            fitness[0] = base.Function.Calc(individual);
             individual = new Individual<RealChromosome, RealGene, double>(new RealChromosome(fs[1]));
-            fitness[1] = this._function.Calc(individual);
+            fitness[1] = base.Function.Calc(individual);
             individual = new Individual<RealChromosome, RealGene, double>(new RealChromosome(fs[2]));
-            fitness[2] = this._function.Calc(individual);
+            fitness[2] = base.Function.Calc(individual);
 
-            if(this._isMinimization)
+            if(base.Function.IsMinimization)
                 if (fitness[0] < fitness[2] && fitness[1] < fitness[2])
                     return new RealGene[][] { fs[0], fs[1] };
                 else if (fitness[0] < fitness[1] && fitness[2] < fitness[1])

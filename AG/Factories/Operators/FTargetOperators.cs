@@ -6,10 +6,11 @@ using GA.Structures.Binaries;
 using GA.Structures.Interfaces;
 using GALibrary.Structures.Real;
 using System;
+using System.Xml.Linq;
 
 namespace GALibrary.Factories.Operators
 {
-    public class FTargetOperators<T, E, F> : FOperators<T, E, F>
+    public class FTargetOperators<T, E, F> : FOperators
         where T : ITargetChromosome<E, F> where E : IGene<F>
     {
         private static FTargetOperators<T, E, F> _instance;
@@ -21,38 +22,43 @@ namespace GALibrary.Factories.Operators
             return _instance ??= new FTargetOperators<T, E, F>();
         }
 
-        public BIOperator CreateCrossover(Type type, object[] arguments)
+        public override BIOperator CreateCrossover(Type type, IFunction function, double factor, object[]? arguments)
         {
             switch (type)
             {
                 case Type t when t.Equals(typeof(TargetCrossover<,,>)):
-                    return CreateTargetCrossover(arguments);
+                    return CreateTargetCrossover(function, factor, (Crossover<T, E, F>)arguments[0]);
 
                 default:
                     throw new Exception();
             }
         }
 
-        private static BIOperator CreateTargetCrossover(object[] arguments)
+        private static BIOperator CreateTargetCrossover(IFunction function, double factor, Crossover<T, E, F> covered)
         {
-            return new TargetCrossover<T, E, F>((Crossover<T, E, F>)arguments[0], (double)arguments[1]);
+            return new TargetCrossover<T, E, F>(function, factor, covered);
         }
 
-        public BIOperator CreateMutation(Type type, object[] arguments)
+        public override BIOperator CreateMutation(Type type, IFunction function, double factor, object[]? arguments)
         {
             switch (type)
             {
                 case Type t when t.Equals(typeof(TargetMutation<,,>)):
-                    return CreateTargetMutation(arguments);
+                    return CreateTargetMutation(function, factor, (Mutation<T, E, F>)arguments[0]);
 
                 default:
                     throw new Exception();
             }
         }
 
-        private static BIOperator CreateTargetMutation(object[] arguments)
+        private static BIOperator CreateTargetMutation(IFunction function, double factor, Mutation<T, E, F> covered)
         {
-            return new TargetMutation<T, E, F>((Mutation<T, E, F>)arguments[0], (double)arguments[1]);
+            return new TargetMutation<T, E, F>(function, factor, covered);
+        }
+
+        public override object[] CreateEmptyArray(int size)
+        {
+            return new IOperator<T, E, F>[size];
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using System;
-
+using GA.Functions.Interfaces;
 using GA.Operators;
 using GA.Structures.Binaries;
 using GA.Structures.Utilities;
@@ -15,7 +15,7 @@ namespace GA.Operators
         protected double Beta { get => this._beta; }
         protected double SubOperator { get => this._beta; }
 
-        public RealCrossover(double beta, bool isSum, double factor) : base(factor) 
+        public RealCrossover(IFunction function, double factor, double beta, bool isSum) : base(function, factor) 
         {
             this._beta = beta;
             this._subOperator = isSum? 1 : -1;

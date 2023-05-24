@@ -1,6 +1,7 @@
 ﻿using System;
-
+using System.Text;
 using GA.Structures.Generics;
+using GA.Structures.Integer;
 
 namespace GALibrary.Structures.Real
 {
@@ -28,6 +29,16 @@ namespace GALibrary.Structures.Real
                 newGenes[i] = (RealGene)this._genes[0].New(new object[] { });
 
             return new RealChromosome(newGenes);
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            foreach (RealGene gene in base._genes)
+                sb.Append(gene.ToString() + " ");
+
+            return sb.ToString();
         }
     }
 }

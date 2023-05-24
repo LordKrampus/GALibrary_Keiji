@@ -1,5 +1,5 @@
 ﻿using System;
-
+using GA.Functions.Interfaces;
 using GA.Operators;
 using GA.Structures.Interfaces;
 using GA.Structures.Utilities;
@@ -9,7 +9,7 @@ namespace GA.Operators
     public abstract class Mutation<T, E, F> : Operator<T, E, F> where T : IChromosome<E, F> where E : IGene<F>
     {
 
-        public Mutation(double factor) : base(factor) 
+        public Mutation(IFunction function, double factor) : base(function, factor) 
         { }
 
         public override T[] Apply(T[] parameters)

@@ -6,12 +6,13 @@ using GA.Operators.Interfaces;
 using GA.Operators;
 using GA.Utilities;
 using GA.Structures.Utilities;
+using GA.Functions.Interfaces;
 
 namespace GA.Operators
 {
     public abstract class Crossover<T, E, F> : Operator<T, E, F> where T : IChromosome<E, F> where E: IGene<F>
     {
-        public Crossover(double factor) : base(factor) 
+        public Crossover(IFunction function, double factor) : base(function, factor) 
         { }
 
         public override T[] Apply(T[] arguments)

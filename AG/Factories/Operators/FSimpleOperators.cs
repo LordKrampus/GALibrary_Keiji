@@ -9,7 +9,7 @@ using System;
 
 namespace GALibrary.Factories.Operators
 {
-    public class FSimpleOperators<T, E, F> : FOperators<T, E, F> 
+    public class FSimpleOperators<T, E, F> : FOperators
         where T : IChromosome<E, F> where E : IGene<F>
     {
         private static FSimpleOperators<T, E, F> _instance;
@@ -26,68 +26,67 @@ namespace GALibrary.Factories.Operators
             throw new NotImplementedException();
         }
 
-        public object[] CreateEmptyArray(Type type, Type[] tGenerics, int size)
-        {
-            throw new NotImplementedException();
-        }
-
-        public BIOperator CreateCrossover(Type type, object[] arguments)
+        public override BIOperator CreateCrossover(Type type, IFunction function, double factor, object[]? arguments)
         {
             switch (type)
             {
                 case Type t when t.Equals(typeof(BinaryCrossover)):
-                    return CreateBinaryCrossover(arguments);
+                    return CreateBinaryCrossover(function, factor);
 
                 case Type t when t.Equals(typeof(RadcliffeCrossover)):
-                    return CreateRadCliffeCrossover(arguments);
+                    return CreateRadCliffeCrossover(function, factor, (double)arguments[0], (bool)arguments[1]);
 
                 case Type t when t.Equals(typeof(WrigthCrossover)):
-                    return CreateWrigthCrossover(arguments);
+                    return CreateWrigthCrossover(function, factor, (double)arguments[0], (bool)arguments[1]);
 
                 default:
                     throw new Exception();
             }
         }
 
-        private static BIOperator CreateBinaryCrossover(object[] arguments)
+        private static BIOperator CreateBinaryCrossover(IFunction function, double factor)
         {
-            return new BinaryCrossover((double)arguments[0]);
+            return new BinaryCrossover(function, factor);
         }
 
-        private static BIOperator CreateRadCliffeCrossover(object[] arguments)
+        private static BIOperator CreateRadCliffeCrossover(IFunction function, double factor, double beta, bool isSum)
         {
-            return new RadcliffeCrossover((double)arguments[0], (bool)arguments[1], (double)arguments[2]);
+            return new RadcliffeCrossover(function, factor, beta, isSum);
         }
 
-        private static BIOperator CreateWrigthCrossover(object[] arguments)
+        private static BIOperator CreateWrigthCrossover(IFunction function, double factor, double beta, bool isSum)
         {
-            return new WrigthCrossover((IFunction)arguments[0], (bool)arguments[1], (double)arguments[2], (bool)arguments[3], (double)arguments[4]);
+            return new WrigthCrossover(function, factor, beta, isSum);
         }
 
-        public BIOperator CreateMutation(Type type, object[] arguments)
+        public override BIOperator CreateMutation(Type type, IFunction function, double factor, object[]? arguments)
         {
             switch (type)
             {
-                case Type t when t.Equals(typeof(BinaryChromosome)):
-                    return CreateBinaryMutation(arguments);
+                case Type t when t.Equals(typeof(BinaryMutation)):
+                    return CreateBinaryMutation(function, factor);
 
-                case Type t when t.Equals(typeof(RealChromosome)):
-                    return CreateRealMutation(arguments);
+                case Type t when t.Equals(typeof(RealMutation)):
+                    return CreateRealMutation(function, factor, (double)arguments[0], (double)arguments[1]);
 
                 default:
                     throw new Exception();
             }
         }
 
-        private static BIOperator CreateBinaryMutation(object[] arguments)
+        private static BIOperator CreateBinaryMutation(IFunction function, double factor)
         {
-            return new BinaryMutation((double)arguments[0]);
+            return new BinaryMutation(function, factor);
         }
 
-        private static BIOperator CreateRealMutation(object[] arguments)
+        private static BIOperator CreateRealMutation(IFunction function, double factor, double lInf, double lSup)
         {
-            return new RealMutation((double)arguments[0], (double)arguments[1], (double)arguments[2]);
+            return new RealMutation(function, factor, lInf, lSup);
         }
 
+        public override object[] CreateEmptyArray(int size)
+        {
+            return new IOperator<T, E, F>[size];
+        }
     }
 }

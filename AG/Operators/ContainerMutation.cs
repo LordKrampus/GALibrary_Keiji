@@ -1,4 +1,5 @@
-﻿using GA.Operators;
+﻿using GA.Functions.Interfaces;
+using GA.Operators;
 using GA.Structures.Capsules;
 using GA.Structures.Interfaces;
 using GA.Structures.Utilities;
@@ -11,7 +12,7 @@ namespace GALibrary.Operators
        where T : ContainerChromosome<GeneChromosome<DynamicChromosome<E, F, G, H>, E, H>, E, F, G, H> where E : PersistentGene<GeneChromosome<F, G, H>, H>
        where F : IChromosome<G, H> where G : IGene<H>
     {
-        public ContainerMutation(double factor) : base(factor)
+        public ContainerMutation(IFunction function, double factor) : base(function, factor)
         { }
 
         protected override H GenerateMutationValue(G[] genes, int mutationPoint)
@@ -28,8 +29,8 @@ namespace GALibrary.Operators
             int mpA, mpB;
             int individualSize = sequence.Length;
 
-            mpA = base._sorter.SortBefore(individualSize - 1);
-            mpB = base._sorter.SortBefore(individualSize - 1);
+            mpA = sorter.SortBefore(individualSize - 1);
+            mpB = sorter.SortBefore(individualSize - 1);
 
             UtilChromosome.InvertGeneInSequence<E, H>(sequence, mpA, mpB);
 

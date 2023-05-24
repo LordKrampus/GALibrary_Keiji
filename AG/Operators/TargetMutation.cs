@@ -6,6 +6,7 @@ using GA.Structures.Interfaces;
 using GA.Structures.Utilities;
 using GA.Structures;
 using GA.Structures.Binaries;
+using GA.Functions.Interfaces;
 
 namespace GA.Operators
 {
@@ -13,7 +14,7 @@ namespace GA.Operators
     {
         private Mutation<T, E, F> _covered;
 
-        public TargetMutation(Mutation<T, E, F> covered, double factor) : base(factor) 
+        public TargetMutation(IFunction function, double factor, Mutation<T, E, F> covered) : base(function, factor) 
         {
             this._covered = covered;
         }

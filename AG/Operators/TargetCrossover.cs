@@ -1,5 +1,5 @@
 ﻿using System;
-
+using GA.Functions.Interfaces;
 using GA.Structures.Interfaces;
 using GA.Structures.Utilities;
 
@@ -9,7 +9,7 @@ namespace GA.Operators
     {
         private Crossover<T, E, F> _covered;
 
-        public TargetCrossover(Crossover<T, E, F> covered, double factor) : base(factor) 
+        public TargetCrossover(IFunction function, double factor, Crossover<T, E, F> covered) : base(function, factor) 
         {
             this._covered = covered;
         }

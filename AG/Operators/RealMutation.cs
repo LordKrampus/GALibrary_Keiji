@@ -1,5 +1,5 @@
 ﻿using System;
-
+using GA.Functions.Interfaces;
 using GA.Operators;
 using GA.Structures.Binaries;
 using GA.Structures.Utilities;
@@ -11,7 +11,7 @@ namespace GA.Operators
     {
         private double _lInf, _lSup; // limites
 
-        public RealMutation(double lInf, double lSup, double factor) : base(factor) 
+        public RealMutation(IFunction function, double factor, double lInf, double lSup) : base(function, factor) 
         {
             this._lInf = lInf;
             this._lSup = lSup;
@@ -19,7 +19,7 @@ namespace GA.Operators
 
         protected override double GenerateMutationValue(RealGene[] genes, int mutationPoint)
         {
-            return base._sorter.SortContinue(this._lInf, this._lSup);
+            return sorter.SortContinue(this._lInf, this._lSup);
         }
     }
 }

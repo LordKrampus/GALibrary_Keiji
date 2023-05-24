@@ -1,5 +1,5 @@
 ﻿using System;
-
+using GA.Functions.Interfaces;
 using GA.Operators;
 using GA.Structures.Binaries;
 using GA.Structures.Utilities;
@@ -9,7 +9,7 @@ namespace GA.Operators
 {
     public class RadcliffeCrossover : RealCrossover
     {
-        public RadcliffeCrossover(double beta, bool isSum, double factor) : base(beta, isSum, factor) 
+        public RadcliffeCrossover(IFunction function, double factor, double beta, bool isSum) : base(function, factor, beta, isSum) 
         { }
 
         public override RealGene[][] Apply(RealGene[] aE, RealGene[] bE)
