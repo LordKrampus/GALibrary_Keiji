@@ -6,10 +6,10 @@ namespace GA.Functions.Interfaces
 {
     public interface IFunction
     {
-        public double[] Factors { get; set;  }
+        public double[] Scales { get; set;  }
         public bool IsMinimization { get; set; }
 
-        public void ApplyFactor(double[] a, out double[] b);
+        public void ApplyScales(double[] a, out double[] b);
 
         public double Calc(object[] variables, bool applyFactor = true);
 
