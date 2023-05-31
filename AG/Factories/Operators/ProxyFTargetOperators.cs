@@ -20,7 +20,8 @@ namespace GALibrary.Factories.Operators
 
         public override BIOperator CreateCrossover(Type type, IFunction function, double factor, object[]? arguments)
         {
-            return this._fTarget.CreateCrossover(type, function, factor, new object[] { this._fCovered });
+            return this._fTarget.CreateCrossover(type, function, factor, 
+                new object[]{ this._fCovered.CreateCrossover(typeof(Crossover<,,>), function, factor, new object[] {}) });
         }
 
         public override BIOperator CreateMutation(Type type, IFunction function, double factor, object[]? arguments)

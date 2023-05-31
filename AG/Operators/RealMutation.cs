@@ -19,7 +19,7 @@ namespace GA.Operators
 
         protected override double GenerateMutationValue(RealGene[] genes, int mutationPoint)
         {
-            return sorter.SortContinue(this._lInf, this._lSup);
+            return sorter.SortContinue(base.Function.LInfs[mutationPoint], base.Function.LSups[mutationPoint]);
         }
     }
 }
