@@ -14,7 +14,7 @@ using GA.Structures.Individuals;
 
 namespace GA.Algoritmos
 {
-    public class GeneticAlgorithm<T, E, F> : IGeneticAlgorithm<T, E, F> where T : IChromosome<E, F> where E : IGene<F>
+    public class DifferentialEvolution<T, E, F> : IGeneticAlgorithm<T, E, F> where T : IChromosome<E, F> where E : IGene<F>
     {
         protected IPopulation<T, E, F> _population;
         protected int _limitGenerations;
@@ -35,6 +35,8 @@ namespace GA.Algoritmos
         private List<IIndividual<T, E, F>> _cacheBestIndividuals;
         private List<double> _cacheMeans;
         private double _cacheMean;
+
+        private IIndividual<T, E, F> _xg;
 
         public int PopulationSize { get => this._population.Count; set => new NotImplementedException(); }
         public int IndividualSize { get => this._population.Individuals [0].Size; set => throw new NotImplementedException(); }
@@ -59,17 +61,14 @@ namespace GA.Algoritmos
         public BIIndividual[] ObjCacheBestIndividuals => this._cacheBestIndividuals.ToArray();
         public double[] CacheMeans => this._cacheMeans.ToArray();
 
-        public GeneticAlgorithm(IPopulation<T, E, F> population, int limitGenerations,
-            IFunction function, ISelectionMethod<T, E, F> selectionMethods, IOperator<T, E, F>[] operators, bool hasElitismo = false)
+        public DifferentialEvolution(IPopulation<T, E, F> population, int limitGenerations,
+            IFunction function, ISelectionMethod<T, E, F> selectionMethods, IOperator<T, E, F>[] operators)
         {
             this._population = population;
             this._limitGenerations = limitGenerations;
             this._function = function;
             this._sMethod = selectionMethods;
             this._operators = operators;
-
-            this._hasElitismo = hasElitismo;
-            this._elitismo = new Elitismo<T, E, F>();
 
             this._bestIndividual = null;
             this._hasFinished = false;
@@ -128,29 +127,29 @@ namespace GA.Algoritmos
 
         public void RunStep(IIndividual<T, E, F>[] individuals)
         {
-            T[] chromosomes = new T[2];
+            int i;
+            IIndividual<T, E, F> xig;
+            IIndividual<T, E, F>[] xrgs = new IIndividual<T, E, F>[4];
+            IIndividual<T, E, F>[] vig1s = new IIndividual<T, E, F>[this.IndividualSize], 
+                uig1s = new IIndividual<T, E, F>[this.IndividualSize], xig1s = new IIndividual<T, E, F>[this.IndividualSize];
             this._sMethod.SetupPopulation(this._population.Individuals);
 
-            int i = 0;
-            if (this._hasElitismo)
+            xrgs = this._sMethod.RunSelection(3);
+            for(i = 0; i < this.PopulationSize; i++)
             {
-                for(; i < 2; i++)
-                    this._population.Individuals[i] =
-                        this._elitismo.Proced(this._population.Individuals, this._sMethod.IsMinimization);   
+                xig = this.Population.Individuals[i];
+                vig1s[i] = new Individual<T, E, F>(
+                    this._operators[1].Apply(new T[] {
+                        xrgs[0].Chromosome, xrgs[1].Chromosome, xrgs[2].Chromosome })[0]); // OK?
+                uig1s[i] = new Individual<T, E, F>(
+                    this._operators[0].Apply(new T[] { vig1s[i].Chromosome, xig.Chromosome })[0]);
             }
-
-            for (; i < this.PopulationSize; i += 2)
+            for (i = 0; i < this.PopulationSize; i++)
             {
-                individuals = this._sMethod.RunSelection(2); //!!! 2
-
-                for (int e = 0; e < this._operators.Length; e++)
-                {
-                    chromosomes = this._operators[e].Apply(
-                        new T[] { individuals[0].Chromosome, individuals[1].Chromosome} );
-                }
-
-                this._population.Individuals[i] = individuals[0];
-                this._population.Individuals[i + 1] = individuals[1];
+                if (uig1s[i].Fitness > xrgs[i].Fitness)
+                    xig1s[i] = uig1s[i];
+                else
+                    xig1s[i] = xrgs[i];
             }
 
             if (!this.EvaluatePopulation())

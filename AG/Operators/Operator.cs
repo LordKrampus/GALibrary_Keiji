@@ -8,7 +8,7 @@ namespace GA.Operators
 {
     public abstract class Operator<T, E, F> : IOperator<T, E, F> where T : IChromosome<E, F> where E : IGene<F>
     {
-        protected static Sorter sorter;
+        protected Sorter sorter;
 
         private IFunction _function;
         private double _factor;

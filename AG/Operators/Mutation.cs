@@ -33,7 +33,7 @@ namespace GA.Operators
             return a;
         }
 
-        public E[] Apply(E[] genes)
+        public virtual E[] Apply(E[] genes)
         {
             int mutationPoint = base.GeneratePoint(genes);
 
