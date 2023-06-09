@@ -1,11 +1,9 @@
-﻿using GA.Factories;
-using GA.Functions.Interfaces;
-using GA.Operators;
+﻿
 using GA.Operators.Interfaces;
-using GA.Structures.Binaries;
+using GA.Functions.Interfaces;
 using GA.Structures.Interfaces;
-using GALibrary.Structures.Real;
-using System;
+
+using GA.Operators;
 
 namespace GALibrary.Factories.Operators
 {
@@ -39,6 +37,9 @@ namespace GALibrary.Factories.Operators
                 case Type t when t.Equals(typeof(WrigthCrossover)):
                     return CreateWrigthCrossover(function, factor, (double)arguments[0], (bool)arguments[1]);
 
+                case Type t when t.Equals(typeof(DiferentialCrossover)):
+                    return CreateDiferentialCrossover(function, factor);
+
                 default:
                     throw new Exception();
             }
@@ -59,6 +60,11 @@ namespace GALibrary.Factories.Operators
             return new WrigthCrossover(function, factor, beta, isSum);
         }
 
+        private static BIOperator CreateDiferentialCrossover(IFunction function, double factor)
+        {
+            return new DiferentialCrossover(function, factor);
+        }
+
         public override BIOperator CreateMutation(Type type, IFunction function, double factor, object[]? arguments)
         {
             switch (type)
@@ -68,6 +74,9 @@ namespace GALibrary.Factories.Operators
 
                 case Type t when t.Equals(typeof(RealMutation)):
                     return CreateRealMutation(function, factor, (double)arguments[0], (double)arguments[1]);
+
+                case Type t when t.Equals(typeof(DiferentialMutation)):
+                    return CreateDiferentialMutation(function, factor);
 
                 default:
                     throw new Exception();
@@ -82,6 +91,10 @@ namespace GALibrary.Factories.Operators
         private static BIOperator CreateRealMutation(IFunction function, double factor, double lInf, double lSup)
         {
             return new RealMutation(function, factor, lInf, lSup);
+        }
+        private static BIOperator CreateDiferentialMutation(IFunction function, double factor)
+        {
+            return new DiferentialMutation(function, factor);
         }
 
         public override object[] CreateEmptyArray(int size)

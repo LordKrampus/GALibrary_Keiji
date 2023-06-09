@@ -7,12 +7,10 @@ using GALibrary.Structures.Real;
 
 namespace GA.Operators
 {
-    public abstract class DiferentialCrossover : Crossover<RealChromosome, RealGene, double>
+    public class DiferentialCrossover : Crossover<RealChromosome, RealGene, double>
     {
         public DiferentialCrossover(IFunction function, double factor) : base(function, factor)
-        { 
-        
-        }
+        {  }
 
         public override RealChromosome[] Apply(RealChromosome a, RealChromosome b)
         {
