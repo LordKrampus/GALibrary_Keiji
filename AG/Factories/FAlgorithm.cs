@@ -26,6 +26,16 @@ namespace GA.Factories
                 function, method, castOperators, hasElitismo: (bool)arguments[1]);
         }
 
+        public static IGeneticAlgorithm<T, E, F> Reflection_CreateDifferentialAlgorithm<T, E, F>(IPopulation<T, E, F> population,
+            IFunction function, ISelectionMethod<T, E, F> method, object[] operators, object[] arguments)
+            where T : IChromosome<E, F> where E : IGene<F>
+        {
+            IOperator<T, E, F>[] castOperators = new IOperator<T, E, F>[] { (IOperator<T, E, F>)operators[0], (IOperator<T, E, F>)operators[1] };
+
+            return new DifferentialEvolution<T, E, F>(population, (int)arguments[0],
+                function, method, castOperators);
+        }
+
         public object? CreateItem(Type tAlgorithm, Type[] tGenerics, object population, object function,
             object method, object[] ops, object[] arguments)
         {
@@ -34,7 +44,22 @@ namespace GA.Factories
 
         public object? CreateItem(Type tAlgorithm, Type[] tGenerics, object[] arguments)
         {
-            return typeof(FAlgorithm).GetMethod("Reflection_CreateAlgorithm")?.
+            string method;
+            switch (tAlgorithm) 
+            {
+                case Type t when t.Equals(typeof(GeneticAlgorithm<,,>)):
+                    method = "Reflection_CreateAlgorithm";
+                    break;
+
+                case Type t when t.Equals(typeof(DifferentialEvolution<,,>)):
+                    method = "Reflection_CreateDifferentialAlgorithm";
+                    break;
+
+                default:
+                    throw new ArgumentException();
+            }
+
+            return typeof(FAlgorithm).GetMethod(method)?.
                  MakeGenericMethod(tGenerics).Invoke(null, arguments);
         }
 
