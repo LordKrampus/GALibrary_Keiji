@@ -128,28 +128,30 @@ namespace GA.Algoritmos
         public void RunStep(IIndividual<T, E, F>[] individuals)
         {
             int i;
-            IIndividual<T, E, F> xig;
-            IIndividual<T, E, F>[] xrgs = new IIndividual<T, E, F>[4];
-            IIndividual<T, E, F>[] vig1s = new IIndividual<T, E, F>[this.IndividualSize], 
-                uig1s = new IIndividual<T, E, F>[this.IndividualSize], xig1s = new IIndividual<T, E, F>[this.IndividualSize];
-            this._sMethod.SetupPopulation(this._population.Individuals);
+            IIndividual<T, E, F>[] xrgs;
+            IIndividual<T, E, F>[] xigs = new IIndividual<T, E, F>[this.PopulationSize];
+            IIndividual<T, E, F>[] vig1s = new IIndividual<T, E, F>[this.PopulationSize];
+            IIndividual<T, E, F>[] uig1s = new IIndividual<T, E, F>[this.PopulationSize];
 
+            this._sMethod.SetupPopulation(this._population.Individuals);
             xrgs = this._sMethod.RunSelection(3);
             for(i = 0; i < this.PopulationSize; i++)
             {
-                xig = this.Population.Individuals[i];
+                xigs[i] = this.Population.Individuals[i];
                 vig1s[i] = new Individual<T, E, F>(
                     this._operators[1].Apply(new T[] {
                         xrgs[0].Chromosome, xrgs[1].Chromosome, xrgs[2].Chromosome })[0]); // OK?
                 uig1s[i] = new Individual<T, E, F>(
-                    this._operators[0].Apply(new T[] { vig1s[i].Chromosome, xig.Chromosome })[0]);
+                    this._operators[0].Apply(new T[] { vig1s[i].Chromosome, xigs[i].Chromosome })[0]);
             }
             for (i = 0; i < this.PopulationSize; i++)
             {
-                if (uig1s[i].Fitness > xrgs[i].Fitness)
-                    xig1s[i] = uig1s[i];
+                uig1s[i].Fitness = this.CalcFitness(uig1s[i]);
+                if (uig1s[i].Fitness > xigs[i].Fitness && this.Population.BiggerIsBest || 
+                    uig1s[i].Fitness < xigs[i].Fitness && !this.Population.BiggerIsBest)
+                    this.Population.Individuals[i] = uig1s[i];
                 else
-                    xig1s[i] = xrgs[i];
+                    this.Population.Individuals[i] = xigs[i];
             }
 
             if (!this.EvaluatePopulation())

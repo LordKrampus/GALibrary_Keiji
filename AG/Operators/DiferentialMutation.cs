@@ -31,7 +31,8 @@ namespace GA.Operators
             RealChromosome v = new RealChromosome(new RealGene[length]);
             for(int i = 0; i < length; i++)
             {
-                v.Genes[i].Value = base.Factor * (r3.Genes[i].Value - r2.Genes[i].Value) + r1.Genes[i].Value;
+                v.Genes[i] = 
+                    new RealGene(base.Factor * (r3.Genes[i].Value - r2.Genes[i].Value) + r1.Genes[i].Value);
             }
 
             return v;

@@ -20,12 +20,14 @@ namespace GA.Operators
         public RealChromosome CalcU(RealChromosome v, RealChromosome x, int d)
         {
             RealChromosome u = new RealChromosome(new RealGene[d]);
-            int r, l;
+            double r, l;
             for (int i = 0; i < d; i++)
             {
-                r = base.sorter.SortBefore(1);
+                r = base.sorter.SortContinue(0, 1);
                 l = base.sorter.SortBefore(d);
-                u.Genes[i].Value = r <= this.Factor || i == l ? v.Genes[i].Value : x.Genes[i].Value;  
+
+                u.Genes[i] = 
+                    new RealGene(r <= this.Factor || i == l ? v.Genes[i].Value : x.Genes[i].Value);  
             }
 
             return u;

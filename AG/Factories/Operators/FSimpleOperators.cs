@@ -73,7 +73,7 @@ namespace GALibrary.Factories.Operators
                     return CreateBinaryMutation(function, factor);
 
                 case Type t when t.Equals(typeof(RealMutation)):
-                    return CreateRealMutation(function, factor, (double)arguments[0], (double)arguments[1]);
+                    return CreateRealMutation(function, factor);
 
                 case Type t when t.Equals(typeof(DiferentialMutation)):
                     return CreateDiferentialMutation(function, factor);
@@ -88,9 +88,9 @@ namespace GALibrary.Factories.Operators
             return new BinaryMutation(function, factor);
         }
 
-        private static BIOperator CreateRealMutation(IFunction function, double factor, double lInf, double lSup)
+        private static BIOperator CreateRealMutation(IFunction function, double factor)
         {
-            return new RealMutation(function, factor, lInf, lSup);
+            return new RealMutation(function, factor);
         }
         private static BIOperator CreateDiferentialMutation(IFunction function, double factor)
         {
