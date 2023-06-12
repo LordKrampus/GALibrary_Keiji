@@ -32,9 +32,9 @@ namespace GA.Structures.Generics
         {
             StringBuilder sb = new StringBuilder();
             foreach (T gene in this._genes)
-                sb.Append(gene.ToString());
+                sb.Append(gene.ToString() + " ");
 
-            return $"{sb.ToString()} .value: {this.Value} .maxValue {this.MaxValue}";
+            return $"{sb.ToString()}";
         }
 
     } // end : class

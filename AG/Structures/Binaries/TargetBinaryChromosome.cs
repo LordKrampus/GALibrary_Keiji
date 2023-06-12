@@ -75,14 +75,14 @@ namespace GA.Structures.Binaries
             int i = this.Target;
             foreach(BinaryGene gene in base.Genes)
             {
-                sb.Append(gene);
+                sb.Append(gene + " ");
                 i--;
 
                 if (i == 0)
                     sb.Append("|");
             }
 
-            return $"{sb.ToString()} .value: {this.Value} .maxValue {this.MaxValue}";
+            return $"{sb.ToString()}";
         }
     } // end : struct
 } // end : namespace

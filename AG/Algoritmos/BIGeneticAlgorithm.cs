@@ -27,5 +27,7 @@ namespace GA.Algoritmos
 
         public void Run();
         public void RunStep();
+
+        public string ToStringBest();
     }
 }

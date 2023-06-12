@@ -34,7 +34,7 @@ namespace GA.Structures.Capsules
 
         public override string ToString()
         {
-            return base.ToString() + $" ({Persistence})";
+            return this.Gene.ToString();
         }
     }
 }

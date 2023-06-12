@@ -36,7 +36,7 @@ namespace GA.Structures.Capsules
 
         public override string ToString()
         {
-            return $"{this._chromosome.ToString()} ({base._value.ToString()})" ;
+            return this.Chromosome.ToString() ;
         }
     }
 }

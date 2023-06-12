@@ -4,6 +4,7 @@ using GA.Structures.Capsules;
 using GA.Structures.Interfaces;
 using System;
 using GA.Factories;
+using System.Text;
 
 namespace GA.Structures.Capsules
 {
@@ -148,7 +149,13 @@ namespace GA.Structures.Capsules
 
         public override string ToString()
         {
-            return base.ToString();
+            StringBuilder sb = new StringBuilder();
+            foreach(Gen1 container in this._containers)
+            {
+                sb.Append(container.ToString() + "");
+            }
+
+            return sb.ToString();
         }
     }
 }

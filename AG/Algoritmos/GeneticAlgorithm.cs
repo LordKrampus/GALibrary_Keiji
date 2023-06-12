@@ -174,6 +174,11 @@ namespace GA.Algoritmos
             return sb.ToString();
         }
 
+        public string ToStringBest()
+        {
+            return $"{this.Generation - 1}; {this.BestIndividual.ToString()}; {this.Mean}";
+        }
+
     } // end : abstract class (AG)
 
 } // end : namespace(*.Algoritmos)

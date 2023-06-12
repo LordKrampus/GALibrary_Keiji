@@ -134,9 +134,9 @@ namespace GA.Algoritmos
             IIndividual<T, E, F>[] uig1s = new IIndividual<T, E, F>[this.PopulationSize];
 
             this._sMethod.SetupPopulation(this._population.Individuals);
-            xrgs = this._sMethod.RunSelection(3);
             for(i = 0; i < this.PopulationSize; i++)
             {
+                xrgs = this._sMethod.RunSelection(3);
                 xigs[i] = this.Population.Individuals[i];
                 vig1s[i] = new Individual<T, E, F>(
                     this._operators[1].Apply(new T[] {
@@ -173,6 +173,11 @@ namespace GA.Algoritmos
                 sb.Append(generation + "\n");
 
             return sb.ToString();
+        }
+
+        public string ToStringBest()
+        {
+            return $"{this.Generation - 1}; {this.BestIndividual.ToString()}; {this.Mean}";
         }
 
     } // end : abstract class (AG)

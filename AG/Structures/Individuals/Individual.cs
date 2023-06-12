@@ -63,7 +63,7 @@ namespace GA.Structures.Individuals
 
         public override string ToString()
         {
-            return $"{this._chromosome.ToString()} .fitness: {this._fitness}";
+            return $"{this._chromosome.ToString()}; {this._fitness}";
         }
     }
 }

@@ -49,6 +49,7 @@ namespace GA.Structures.Populations
                 return this._bestIndividual;
             }
         }
+        public BIIndividual ObjBestIndividual => this.BestIndividual;
         public IIndividual<T, E, F>? CacheBestIndividual => this._bestIndividual;
 
         public Population(IIndividual<T, E, F>[] individuals, int size, bool biggerIsBest = true)
@@ -79,7 +80,7 @@ namespace GA.Structures.Populations
         public override string ToString()
         {
             return
-                $"({Generation}) .individual: {BestIndividual.ToString()} \t.Mmean: {Mean}";
+                $"{Generation}; {BestIndividual.ToString()}; {Mean}";
         }
 
     } // end : class
